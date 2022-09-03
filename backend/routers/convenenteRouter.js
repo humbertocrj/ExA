@@ -34,13 +34,34 @@ convenenteRouter.get('/:id', asyncHandler(async (req, res) => {
         ufId:uf.id,
         estado:uf.nome, 
         sigla:uf.sigla, 
-        regiao:uf.regiao}
+        regiao:uf.regiao
+    }
  
     res.json(convenenteDetalhe)
 }))
 
 convenenteRouter.patch('/:id', asyncHandler(async(req, res)=>{
+    const filter = req.params.id
+   
+    const update = {
+        nome:req.body.nome, 
+        cnpj:req.body.cnpj,
+        uf:req.body.uf
+     
+    }
+
+    let doc =  await Convenente.findByIdAndUpdate(filter, update, {returnOriginal:false})
+  
+    res.json(doc)
     
+}))
+
+convenenteRouter.delete("/:id", asyncHandler(async (req, res)=>{
+    const id = req.params.id
+
+    const doc = await Convenente.findByIdAndDelete(id)
+
+    res.json(doc)
 }))
 
 export default convenenteRouter

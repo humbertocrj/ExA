@@ -19,9 +19,16 @@ convenioRouter.post('/novo', asyncHandler(async (req, res,next)=>{
     
     const convenio = new Convenio({
         numeroCV:req.body.numeroCV,
+        numeroPrograma:req.body.numeroPrograma,
+        tipoDeProjeto:req.body.tipoDeProjeto,
+        formaDeSelecao:req.body.formaDeSelecao,
         objeto:req.body.objeto,
         inicioVigencia:req.body.inicioVigencia,
         terminoVigencia:req.body.terminoVigencia,
+        dataRealizacaoInicio:req.body.dataRealizacaoInicio,
+        dataRealizacaoFim:req.body.dataRealizacaoFim,
+        recursoConcedente:req.body.recursoConcedente,
+        contrapartida:req.body.contrapartida,
         responsavel:req.body.responsavel
     })
      await convenio.save()
@@ -32,11 +39,16 @@ convenioRouter.patch('/:id',asyncHandler( async (req,res, next) => {
     const filter = req.params.id
     const update = {
         numeroCV:req.body.numeroCV,
+        numeroPrograma:req.body.numeroPrograma,
+        formaDeSelecao:req.body.formaDeSelecao,
+        tipoDeProjeto:req.body.tipoDeProjeto,
         objeto:req.body.objeto,
         inicioVigencia:req.body.inicioVigencia,
         terminoVigencia:req.body.terminoVigencia,
         dataRealizacaoInicio:req.body.dataRealizacaoInicio,
         dataRealizacaoFim:req.body.dataRealizacaoFim,
+        recursoConcedente:req.body.recursoConcedente,
+        contrapartida:req.body.contrapartida,
         responsavel:req.body.responsavel
     }
     

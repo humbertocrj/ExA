@@ -7,6 +7,9 @@ import responsavelRouter from './routers/responsavelRouter.js'
 import telefoneRouter from './routers/telefoneRouter.js'
 import ufRouter from './routers/ufRouter.js'
 import convenenteRouter from './routers/convenenteRouter.js';
+import providenciasRouter from './routers/providenciasRouter.js'
+
+
 
 const app = express();
 app.use(express.json());
@@ -29,6 +32,7 @@ app.use('/api/responsaveis', responsavelRouter)
 app.use('/api/telefones', telefoneRouter)
 app.use('/api/ufs', ufRouter)
 app.use('/api/convenentes', convenenteRouter)
+app.use('/api/providencias', providenciasRouter)
 
 
 //Middle to catch error from express-async-handler

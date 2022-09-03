@@ -6,6 +6,10 @@ const convenioSchema = new mongoose.Schema({
         required: true,
         type:String
     },
+    tipoDeProjeto:{
+        required:true,
+        type:String
+    },
     objeto:{
         required:true,
         type:String
