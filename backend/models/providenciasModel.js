@@ -19,8 +19,8 @@ const providenciasSchema = new mongoose.Schema({
         type:Date,
         required:true
     },
-    convenioId:{
-        type:Schema.Types.ObjectId,
+    convenio:{
+        type: Schema.Types.ObjectId,
         ref:"Convenio"
     }
 })

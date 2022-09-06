@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+const {Schema} = mongoose
 
 const responsavelSchema = new mongoose.Schema({
     nome:{
@@ -9,10 +10,7 @@ const responsavelSchema = new mongoose.Schema({
         type:String,
         required:true
     },
-    telefone:{
-        type:String,
-        required:true
-    },
+    telefone:[{type:Schema.Types.ObjectId, ref:'Telefone' }],
     tipo:{
         type:String,
         required:true

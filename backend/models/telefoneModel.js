@@ -8,10 +8,6 @@ const telefoneSchema = new Schema({
     numero:{
         type:String,
         required:true
-    },
-    responsavel:{
-        type:Schema.Types.ObjectId,
-        ref:"Responsavel"
     }
 })
 

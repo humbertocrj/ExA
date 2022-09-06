@@ -8,8 +8,8 @@ import telefoneRouter from './routers/telefoneRouter.js'
 import ufRouter from './routers/ufRouter.js'
 import convenenteRouter from './routers/convenenteRouter.js';
 import providenciasRouter from './routers/providenciasRouter.js'
-
-
+import pagamentoRouter from './routers/pagamentoRouter.js'
+import aceiteLicitatorioRouter from './routers/aceiteLicitatorioRouter.js'
 
 const app = express();
 app.use(express.json());
@@ -33,7 +33,8 @@ app.use('/api/telefones', telefoneRouter)
 app.use('/api/ufs', ufRouter)
 app.use('/api/convenentes', convenenteRouter)
 app.use('/api/providencias', providenciasRouter)
-
+app.use('/api/pagamentos', pagamentoRouter)
+app.use('/api/aceite_licitacao', aceiteLicitatorioRouter)
 
 //Middle to catch error from express-async-handler
 app.use((err, req, res,next) => {

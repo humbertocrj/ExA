@@ -12,7 +12,9 @@ responsavelRouter.get('/',asyncHandler(async (req, res, next) => {
 responsavelRouter.get('/:id', asyncHandler(async (req, res, next) => {
     const responsavelId = req.params.id
 
-    const doc = await Responsavel.findById(responsavelId)
+    const responsavel = await Responsavel.findById(responsavelId)
+    const doc = await responsavel.populate('telefone')
+
     res.json(doc)
 }))
 

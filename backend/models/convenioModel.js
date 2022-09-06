@@ -6,6 +6,14 @@ const convenioSchema = new mongoose.Schema({
         required: true,
         type:String
     },
+    numeroProcesso:{
+        required: true,
+        type:String
+    },
+    numeroProposta:{
+        required: true,
+        type:String
+    },
     tipoDeProjeto:{
         required:true,
         type:String
@@ -47,9 +55,10 @@ const convenioSchema = new mongoose.Schema({
         type:Date
     },
     responsavel:{
-        type:Schema.Types.ObjectId,
+        type:[Schema.Types.ObjectId],
         ref:"Responsavel"
-    }
+    },
+   
 })
 
 const Convenio = mongoose.model('Convenio',convenioSchema)

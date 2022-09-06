@@ -4,21 +4,15 @@ import asyncHandler from 'express-async-handler'
 
 const providenciasRouter = express.Router()
 
-providenciasRouter.post('/novo', asyncHandler(async (req, res)=>{
-
-    const providencias = new Providencias({
+const getProvidencias = (req)=>{
+    return {
         tipo:req.body.tipo,
         descricao:req.body.descricao,
         data:req.body.data,
         prazo:req.body.prazo,
-        convenioId:req.body.convenio
-    })
-
-    await providencias.save()
-
-    res.json(providencias)
-
-}))
+        convenio:req.body.convenio
+    }
+}
 
 providenciasRouter.get("/", asyncHandler(async (req, res)=>{
     const docs = await Providencias.find({})
@@ -26,11 +20,31 @@ providenciasRouter.get("/", asyncHandler(async (req, res)=>{
     res.json(docs)
 }))
 
+providenciasRouter.post('/novo', asyncHandler(async (req, res)=>{
+
+    const providencias = new Providencias(getProvidencias(req))
+
+    await providencias.save()
+
+    res.json(providencias)
+
+}))
+
 providenciasRouter.get('/:id', asyncHandler(async (req, res)=>{
     const id = req.params.id
-    const providencia = await Providencias.findById(id);
+    const providencia = await Providencias.findById(id).populate("convenio");
     
     res.json(providencia)
+}))
+
+providenciasRouter.patch('/:id', asyncHandler(async (req, res)=>{
+    const filter = req.params.id
+    const update = getProvidencias(req)
+
+    const doc = await Providencias.findByIdAndUpdate(filter, update,{returnOriginal:false})
+
+    res.json(doc)
+
 }))
 
 providenciasRouter.delete('/:id', asyncHandler(async (req, res)=>{

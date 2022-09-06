@@ -8,7 +8,6 @@ telefoneRouter.post('/novo', asyncHandler(async (req,res, next) => {
     const telefone = new Telefone({
         tipo:req.body.tipo,
         numero:req.body.numero,
-        responsavel:req.body.responsavel
     })
     
    const doc = await telefone.save()

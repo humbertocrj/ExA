@@ -4,42 +4,12 @@ import asyncHandler from 'express-async-handler'
 
 const convenioRouter = express.Router()
 
-
-convenioRouter.get('/', asyncHandler(async (req, res, next)=>{
-    const convenios = await Convenio.find({})
-    res.json(convenios)
-}))
-
-convenioRouter.get('/:id', asyncHandler(async (req, res)=>{
-    const convenio = await Convenio.findById(req.params.id)
-    res.json(convenio)
-}))
-
-convenioRouter.post('/novo', asyncHandler(async (req, res,next)=>{
-    
-    const convenio = new Convenio({
+let getConvenio = (req)=>{
+    return {
         numeroCV:req.body.numeroCV,
         numeroPrograma:req.body.numeroPrograma,
-        tipoDeProjeto:req.body.tipoDeProjeto,
-        formaDeSelecao:req.body.formaDeSelecao,
-        objeto:req.body.objeto,
-        inicioVigencia:req.body.inicioVigencia,
-        terminoVigencia:req.body.terminoVigencia,
-        dataRealizacaoInicio:req.body.dataRealizacaoInicio,
-        dataRealizacaoFim:req.body.dataRealizacaoFim,
-        recursoConcedente:req.body.recursoConcedente,
-        contrapartida:req.body.contrapartida,
-        responsavel:req.body.responsavel
-    })
-     await convenio.save()
-    res.json(convenio)
-}))
-
-convenioRouter.patch('/:id',asyncHandler( async (req,res, next) => {
-    const filter = req.params.id
-    const update = {
-        numeroCV:req.body.numeroCV,
-        numeroPrograma:req.body.numeroPrograma,
+        numeroProposta:req.body.numeroProposta,
+        numeroProcesso:req.body.numeroProcesso,
         formaDeSelecao:req.body.formaDeSelecao,
         tipoDeProjeto:req.body.tipoDeProjeto,
         objeto:req.body.objeto,
@@ -51,6 +21,28 @@ convenioRouter.patch('/:id',asyncHandler( async (req,res, next) => {
         contrapartida:req.body.contrapartida,
         responsavel:req.body.responsavel
     }
+}
+
+convenioRouter.get('/', asyncHandler(async (req, res, next)=>{
+    const convenios = await Convenio.find({})
+    res.json(convenios)
+}))
+
+convenioRouter.post('/novo', asyncHandler(async (req, res,next)=>{
+    
+    const convenio = new Convenio(getConvenio(req))
+     await convenio.save()
+    res.json(convenio)
+}))
+
+convenioRouter.get('/:id', asyncHandler(async (req, res)=>{
+    const convenio = await Convenio.findById(req.params.id).populate("responsavel")
+    res.json(convenio)
+}))
+
+convenioRouter.patch('/:id',asyncHandler( async (req,res, next) => {
+    const filter = req.params.id
+    const update = getConvenio(req)
     
    let doc =  await Convenio.findByIdAndUpdate(filter, update, {returnOriginal:false})
    res.json(doc)
