@@ -1,24 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
-
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import logo from "./logo.svg";
+import "./App.css";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import Sidebar from "./components/Sidebar";
+import Main from "./components/Main";
 
 function App() {
   return (
-    <Container>
-      <Row>
-      <Col>Header</Col>
-      </Row>
-      <Row>
-        <Col>Sidebar</Col>
-        <Col>Main</Col>
-      </Row>
-      <Row>
-      <Col>Footer</Col>
-      </Row>
-    </Container>
+    <div className="container">
+      <Header />
+      <div className="content">
+        <Sidebar />
+        <Main>
+          asdf
+        </Main>
+      </div>
+      <Footer />
+    </div>
   );
 }
 

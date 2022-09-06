@@ -1,0 +1,29 @@
+.header{
+    background:#f0f0f0;
+    height: 56px;
+    display: flex;
+    align-items: center;
+}
+
+.logo{
+    height: 100%;
+    width: 210px;
+    margin-left: 20px;
+}
+
+.logo span:nth-child(1){
+    color:#20A8D8;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.logo span:nth-child(2){
+    
+    color:#FFCD24;
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.menu{
+border: 1px solid red;
+}

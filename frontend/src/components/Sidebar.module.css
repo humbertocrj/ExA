@@ -1,0 +1,56 @@
+.sidebar{
+    background:#20A8D8;
+    width: 250px;
+    transition: 0.5s;
+
+}
+
+.hide{
+    width: 55px;
+}
+
+.sidebar-item{
+    color:white;
+    display: flex;
+    padding: 7px 10px;
+    font-size: 1.2rem;
+    align-items: flex-end;
+    margin-bottom: 5px;
+    transition: 0.2s;
+}
+.sidebar-item:hover{
+    background: #128ab5;
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.sidebar-item span{
+    margin-left: 10px;
+    transition: 0.5s;
+    
+}
+
+.sidebar.hide .sidebar-item span{
+    opacity: 0;
+    font-size: 0;
+
+}
+
+.toggle{
+    position: relative;
+    height: 30px;
+
+}
+
+.toggle-icon{
+    position:absolute;
+    top:5px;
+    right: 5px;
+    color: #fff;
+    
+}
+
+.toggle-icon:hover{
+    cursor: pointer;
+    transform: scale(1.1);
+}
