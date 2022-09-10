@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import style from './Sidebar.module.css'
 import BarChartOutlinedIcon from '@mui/icons-material/BarChartOutlined';
 import HandshakeIcon from '@mui/icons-material/Handshake';
@@ -22,39 +23,40 @@ const Sidebar = (props) => {
     <div className={sidebarStyle}>
       <div className={toggleButtonStyle} onClick={toggleShow}>
         <div className={style["toggle-icon"]}>
-        {show?<CloseIcon fontSize="small"/>:<ArrowForwardIcon fontSize="small"/>}
+          {show ? <CloseIcon fontSize="small" /> : <ArrowForwardIcon fontSize="small" />}
         </div>
       </div>
 
-      <div className={style["sidebar-item"]}>
-        <BarChartOutlinedIcon fontSize="large" />
-        <span >Dashboard</span>
-      </div>
+      
+        <Link className={style["sidebar-item"]} to="dashboard">
+          <BarChartOutlinedIcon fontSize="large" />
+          <span >Dashboard</span>
+        </Link>
+      
+        <Link className={style["sidebar-item"]} to="convenios">
+          <HandshakeIcon fontSize="large" />
+          <span>Convenios</span>
+        </Link>
 
-      <div className={style["sidebar-item"]}>
-        <HandshakeIcon fontSize="large" />
-        <span >Convênios</span>
-      </div>
-
-      <div className={style["sidebar-item"]}>
+      <Link to="convenente" className={style["sidebar-item"]}>
         <HomeWorkIcon fontSize="large" />
         <span >Convenente</span>
-      </div>
+      </Link>
 
-      <div className={style["sidebar-item"]}>
+      <Link to="responsavel" className={style["sidebar-item"]}>
         <HailIcon fontSize="large" />
         <span >Responsável</span>
-      </div>
+      </Link>
 
-      <div className={style["sidebar-item"]}>
+      <Link to="Pagamento" className={style["sidebar-item"]}>
         <AttachMoneyIcon fontSize="large" />
         <span >Pagamento</span>
-      </div>
+      </Link>
 
-      <div className={style["sidebar-item"]}>
+      <Link to="licitacao" className={style["sidebar-item"]}>
         <TaskIcon fontSize="large" />
         <span >Licitação</span>
-      </div>
+      </Link>
 
     </div>
   )

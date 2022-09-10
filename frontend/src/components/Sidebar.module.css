@@ -17,6 +17,7 @@
     align-items: flex-end;
     margin-bottom: 5px;
     transition: 0.2s;
+    text-decoration: none;
 }
 .sidebar-item:hover{
     background: #128ab5;

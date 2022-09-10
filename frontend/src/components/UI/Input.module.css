@@ -1,0 +1,31 @@
+
+input{
+    width: 100%;
+    padding: 5px 15px;
+    flex:1;
+    font-size: 1.05rem;
+    color:#888;
+    border:1px solid #999;
+    border-radius:3px;
+}
+
+input:focus{
+    box-shadow: 0 0 6px #128ab566;
+    outline-color: #128ab5;
+}
+
+.inputContainer{
+    width: 100%;
+    padding: 0 10px;
+}
+label{
+    font-size: 0.95rem;
+    font-weight: 500;
+    display: block;
+    color: #555555;
+    margin-bottom: 5px;
+    letter-spacing: 1px;
+    margin-top: 10px;
+    flex:1;
+
+}

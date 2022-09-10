@@ -4,6 +4,18 @@ import Responsavel from '../models/responsavelModel.js';
 
 const responsavelRouter = express.Router();
 
+const getResponsavel = (req)=> {
+    return {
+            nome: req.body.nome,
+            email: req.body.email,
+            telefoneTrabalhoCel: req.body.telefoneTrabalhoCel,
+            telefoneTrabalhoFixo: req.body.telefoneTrabalhoFixo,
+            telefonePessoal:req.body.telefonePessoal,
+            tipo:req.body.tipo
+        }
+    
+}
+
 responsavelRouter.get('/',asyncHandler(async (req, res, next) => {
     const docs = await Responsavel.find({})
     res.json(docs)
@@ -12,19 +24,14 @@ responsavelRouter.get('/',asyncHandler(async (req, res, next) => {
 responsavelRouter.get('/:id', asyncHandler(async (req, res, next) => {
     const responsavelId = req.params.id
 
-    const responsavel = await Responsavel.findById(responsavelId)
-    const doc = await responsavel.populate('telefone')
-
+    const doc = await Responsavel.findById(responsavelId)
+    
     res.json(doc)
 }))
 
 responsavelRouter.post('/novo', asyncHandler(async (req, res, next) => {
-    const responsavel = new Responsavel({
-        nome: req.body.nome,
-        email: req.body.email,
-        telefone: req.body.telefone,
-        tipo:req.body.tipo
-    })
+   
+    const responsavel = new Responsavel(getResponsavel(req))
 
     const doc = await responsavel.save()
     res.json(doc)
@@ -33,12 +40,8 @@ responsavelRouter.post('/novo', asyncHandler(async (req, res, next) => {
 
 responsavelRouter.patch('/:id', asyncHandler(async(req,res,next)=>{
     const filter = req.params.id
-    const update = {
-        nome: req.body.nome,
-        email: req.body.email,
-        telefone: req.body.telefone,
-        tipo:req.body.tipo
-    }
+    const update = getResponsavel(req)
+
     const doc = await Responsavel.findByIdAndUpdate(filter, update, {returnOriginal:false})
     res.json(doc)
 

@@ -1,0 +1,22 @@
+.form-container{
+    display: flex;
+    flex-direction: column;
+}
+
+fieldset{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.grid{
+    display: grid;
+    grid-template-columns: minmax(200px, 50%)  minmax(200px, 50%);
+}
+
+.right{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 15px;
+}
+
+

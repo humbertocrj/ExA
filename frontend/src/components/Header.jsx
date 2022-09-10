@@ -6,7 +6,12 @@ const Header = (props) => {
   return (
     <div className={style.header}>
       <div className={style.logo}><span>Ex</span><span><sub>A</sub></span></div>
-      <div className={style.menu}>Sair <LogoutIcon /></div>
+      <div className={style.menu}>
+        <a href="/" >
+        <LogoutIcon />
+        </a>
+        </div>
+
     </div>
   )
 }

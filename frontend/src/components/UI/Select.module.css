@@ -1,0 +1,17 @@
+select{
+    width: 100%;
+    padding: 5px 15px;
+    flex:1;
+    font-size: 1.05rem;
+    color:#888;
+    border:1px solid #999;
+    border-radius:3px;
+}
+
+.selectContainer{
+    padding: 0 10px;
+}
+select:focus{
+    box-shadow: 0 0 6px #128ab566;
+    outline-color: #128ab5;
+}

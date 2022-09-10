@@ -6,15 +6,22 @@ const responsavelSchema = new mongoose.Schema({
         type:String,
         required:true
     },
+    tipo:{
+        type:String,
+        required:true
+    },
     email:{
         type:String,
         required:true
     },
-    telefone:[{type:Schema.Types.ObjectId, ref:'Telefone' }],
-    tipo:{
-        type:String,
-        required:true
-    }
+    telefoneTrabalhoCel:{
+        type:String
+    },
+    telefoneTrabalhoFixo:{
+        type:String
+    },telefonePessoal:{
+        type:String
+    } 
 })
 
 const Responsavel = mongoose.model('Responsavel', responsavelSchema)

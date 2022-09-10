@@ -11,6 +11,8 @@ import providenciasRouter from './routers/providenciasRouter.js'
 import pagamentoRouter from './routers/pagamentoRouter.js'
 import aceiteLicitatorioRouter from './routers/aceiteLicitatorioRouter.js'
 
+import cors from 'cors'
+
 const app = express();
 app.use(express.json());
 
@@ -26,6 +28,7 @@ async function connectDB() {
 
 connectDB().catch(err=>console.log(err));
 
+app.use(cors())
 //CRUDS
 app.use('/api/convenios', convenioRouter) 
 app.use('/api/responsaveis', responsavelRouter)
