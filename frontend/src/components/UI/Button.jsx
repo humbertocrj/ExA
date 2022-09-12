@@ -2,12 +2,15 @@ import React from 'react'
 import style from './Button.module.css'
 import './Button.module.css'
 
-const Button = (props) => {
+import Button from 'react-bootstrap/Button';
+import 'bootstrap/dist/css/bootstrap.css';
+
+const Btn = (props) => {
   return (
-    <button className="primary" {...props}>
+    <Button  variant={props.variant} {...props}>
         {props.text}
-    </button>
+    </Button>
   )
 }
 
-export default Button
+export default Btn

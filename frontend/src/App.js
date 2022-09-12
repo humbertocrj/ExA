@@ -10,7 +10,8 @@ import Convenios from "./pages/ConveniosPage";
 import Dashboard from "./pages/DashboardPage";
 import Licitacao from "./pages/LicitacaoPage";
 import Pagamento from "./pages/PagamentoPage";
-import Responsavel from "./pages/ResponsavelPage";
+import ResponsavelListar from "./pages/responsavel/ResponsavelPage_Listar";
+import ResponsavelNovo from "./pages/responsavel/ResponsavelPage_Novo";
 
 function App() {
   return (
@@ -20,12 +21,14 @@ function App() {
         <Sidebar />
         <Main>
           <Routes>
-            <Route path="/" element={ <Dashboard />}/>
             <Route path="/convenios" element={ <Convenios />}/>
-            <Route path="convenente" element={ <Convenente />}/>
-            <Route path="pagamento" element={ <Pagamento />}/>
-            <Route path="licitacao" element={ <Licitacao />}/>
-            <Route path="responsavel" element={ <Responsavel />}/>
+            <Route path="/convenente" element={ <Convenente />}/>
+            <Route path="/pagamento" element={ <Pagamento />}/>
+            <Route path="/licitacao" element={ <Licitacao />}/>
+            <Route path="/responsavel" element={ <ResponsavelListar />}/>
+            <Route path="/responsavel/novo" element={ <ResponsavelNovo />}/>
+            <Route path="/" element={ <Dashboard />}/>
+
           </Routes>
 
         </Main>
