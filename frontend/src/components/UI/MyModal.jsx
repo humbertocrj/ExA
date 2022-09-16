@@ -31,16 +31,13 @@ const cancel = ()=>{
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <h4>Centered Modal</h4>
-        <p>
-          Cras mattis consectetur purus sit amet fermentum. Cras justo odio,
-          dapibus ac facilisis in, egestas eget quam. Morbi leo risus, porta ac
-          consectetur ac, vestibulum at eros.
-        </p>
+       
+          {props.text}
+       
       </Modal.Body>
       <Modal.Footer>
-        <Button onClick={cancel}>Close</Button>
-        <Button onClick={confirm}>Ok</Button>
+        <Button variant="outline-danger" onClick={cancel}>Cancelar</Button>
+        <Button onClick={confirm}>Confirmar</Button>
       </Modal.Footer>
     </Modal>
   );

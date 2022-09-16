@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import Title from '../../components/UI/Title'
 import style from './ResponsavelPage.module.css'
 
@@ -21,45 +21,43 @@ import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 
 const ResponsavelPage = () => {
-  let nome = ""
-  let email = ""
-  let telefoneTrabalho = ""
-  let telefoneFixo = ""
-  let telefonePessoal = ""
-  let tipoResponsavel = ""
+  let [nome, setNome] = useState("")
+  let [email, setEmail] = useState("")
+  let [telefoneTrabalho, setTelefoneTrabalho] = useState("")
+  let [telefoneFixo, setTelefoneFixo] = useState("")
+  let [telefonePessoal, setTelefonePessoal] = useState("")
+  let [tipoResponsavel, setTipoResponsavel] = useState("")
+  const tipoResponsavelSelect = ['Selecione o tipo', 'Técnico do Ministério', 'Técnico do convenente', 'Gestor convenente']
 
   const [mostrarForm, setMostrarForm] = useState(false)
   const [responsaveis, setResponsaveis] = useState(null)
-  const [mensagem, setMensagem] = useState(false)
+  const [mensagemNovo, setMensagemNovo] = useState(false)
+  const [mensagemAtualizar, setMensagemAtualizar] = useState(false)
+  const { id } = useParams()
 
+  const getResponsavel = async (id) => {
+    const res = await axios.get('http://localhost:9000/api/responsaveis/' + id)
+
+    return res.data
+  }
   const navigate = useNavigate()
+  useEffect(() => {
+    if (id) {
+      getResponsavel(id).then((res) => {
 
-  const onChangeNome = (value) => {
-    nome = value
-  }
+        setNome(res.nome)
+        setEmail(res.email)
+        setTipoResponsavel(res.tipo)
+        setTelefoneTrabalho(res.telefoneTrabalhoCel)
+        setTelefoneFixo(res.telefoneTrabalhoFixo)
+        setTelefonePessoal(res.telefonePessoal)
+      })
 
-  const onChangeEmail = (value) => {
-    email = value
-  }
-
-  const onChangeTelefoneTrabalho = (value) => {
-    telefoneTrabalho = value
-  }
-
-  const onChangeTelefoneFixo = (value) => {
-    telefoneFixo = value
-  }
-
-  const onChangeTelefonePessoal = (value) => {
-    telefonePessoal = value
-  }
-  const onChangeTipo = (value) => {
-    tipoResponsavel = value
-
-  }
+    }
+  }, [])
 
   const submitHandler = async (e) => {
-   
+
     e.preventDefault();
     const responsavel = {
       nome: nome,
@@ -69,85 +67,122 @@ const ResponsavelPage = () => {
       telefoneTrabalhoFixo: telefoneFixo,
       telefonePessoal: telefonePessoal
     }
-    
-    const res = await axios.post('http://localhost:9000/api/responsaveis/novo', responsavel)
-    console.log(res)
 
-    setMensagem(true)
-    setTimeout(() => {
-      setMensagem(false)
-    }, 2000)
+    if (!id) {
+      const res = await axios.post('http://localhost:9000/api/responsaveis/novo', responsavel)
+
+      setMensagemNovo(true)
+
+      setTimeout(() => {
+        setMensagemNovo(false)
+        setNome("")
+        setEmail("")
+        setTipoResponsavel("")
+        setTelefoneTrabalho("")
+        setTelefoneFixo("")
+        setTelefonePessoal("")
+
+      }, 2000)
+    } else {
+      const res = await axios.patch('http://localhost:9000/api/responsaveis/' + id, responsavel)
+
+      setMensagemAtualizar(true)
+
+      setTimeout(() => {
+        setMensagemAtualizar(false)
+      }, 2000)
+    }
+
   }//submitHandler
 
+  const titulo = (id ? "editar " : "adicionar ") + "responsavel"
+
   return (
-    <div className="container   h-100">
+    <div className="h-100">
       <Row>
         <Col md="12">
-          <Title text="adicionar responsável" />
+          <Title text={titulo} />
         </Col>
       </Row>
-      {mensagem && <Message variant="success" text="Novo responsável salvo com sucesso!" />}
+      <Row >
+        <Col>
+        {mensagemNovo && <Message variant="success" text="Novo responsável salvo com sucesso!" />}
+        {mensagemAtualizar && <Message variant="success" text="Responsável atualizado com sucesso!" />}
+        </Col>
+      </Row>
       <form className={style["form-container"]} onSubmit={submitHandler}>
         <Row>
           <Col>
-            <Input
-              label="Nome*"
+            <label htmlFor="nome">Nome*</label>
+            <input
               type="text"
               id="nome"
               nome="nome"
-              onChange={onChangeNome}
+              onChange={(e) => setNome(e.target.value)}
+              value={nome}
               required
             />
           </Col>
           <Col>
-            <Input
-              label="E-mail*"
+            <label htmlFor='email'>E-mail*</label>
+            <input
               type="email"
               id="email"
               nome="email"
-              onChange={onChangeEmail}
+              onChange={(e) => setEmail(e.target.value)}
+              value={email}
               required
             />
           </Col>
         </Row>
-        <Col md={3}>
-          <Select
+        <Col md={4}>
+
+          <label htmlFor="tipo">Tipo de responsavel</label>
+          <select
             name="tipo"
             id="tipo"
-            label="Tipo de responsável*"
-            data={['Selecione o tipo', 'Técnico do Ministério', 'Técnico do convenente', 'Gestor convenente']}
-            onChange={onChangeTipo}
-            required
-          />
+            onChange={(e) => setTipoResponsavel(e.target.value)}
+            value={tipoResponsavel}
+          >
+            {tipoResponsavelSelect.map((data, key) => {
+              return <option key={key} value={data}>{data}</option>
+            })}
+          </select>
         </Col>
 
         <Row>
-          <Col md={3}>
-            <Input
-              label="Celular - trabalho)"
+          <Col md={4}>
+            <label htmlFor="telefoneCelularTrabalho">Celular - trabalho</label>
+            <input
               type="tel"
               id="telefoneCelularTrabalho"
               nome="telefoneCelularTrabalho"
-              onChange={onChangeTelefoneTrabalho}
+              onChange={(e) => setTelefoneTrabalho(e.target.value)}
+              value={telefoneTrabalho}
+              className="w-100"
             />
           </Col>
-          <Col md={3}>
-            <Input
-              label="Fixo - Trabalho*"
+          <Col md={4}>
+            <label htmlFor="telefoneFixoTrabalho">Fixo - Trabalho</label>
+            <input
               type="tel"
               id="telefoneFixoTrabalho"
               nome="telefoneFixoTrabalho"
-              onChange={onChangeTelefoneFixo}
+              onChange={(e) => setTelefoneFixo(e.target.value)}
+              value={telefoneFixo}
+              className="w-100"
+
               required
             />
           </Col>
-          <Col md={3}>
-            <Input
-              label="Pessoal"
+          <Col md={4}>
+            <label htmlFor="telefonePessoal">Telefone pessoal</label>
+            <input
               type="tel"
               id="telefonePessoal"
               nome="telefonePessoal"
-              onChange={onChangeTelefonePessoal}
+              onChange={(e) => setTelefonePessoal(e.target.value)}
+              value={telefonePessoal}
             />
           </Col>
         </Row>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState} from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -34,8 +34,8 @@ const ResponsavelPage = () => {
   const [responsaveis, setResponsaveis] = useState(null)
   const [modalShow, setModalShow] = useState(false)
   const [deletar, setDeletar] = useState(false)
-  const [responsavelId, setReponsavelId] = useState(null)
-
+  const [responsavel, setReponsavel] = useState({nome:""})
+  
   const getResponsaveis = async () => {
     const res = await axios.get('http://localhost:9000/api/responsaveis')
     const data = await res.data
@@ -47,24 +47,34 @@ const ResponsavelPage = () => {
   const novoResponsavel = () => {
     navigate('/responsavel/novo')
   }
-  const editarResponsavel = () => {
-    console.log("Edit resonsavel")
+  const detalharResponsavel = (e)=>{
+    const id = e.currentTarget.dataset.id
+    navigate('/responsavel/'+id)
   }
-
+  const editarResponsavel = (e) => {
+    const id = e.currentTarget.dataset.id
+    navigate('/responsavel/editar/'+id)
+    
+  }
   const confirmaExclusao = async (answer) => {
     if (answer) {
-      const res = await axios.get('http://localhost:9000/api/responsaveis/' + responsavelId)
+      const res = await axios.delete('http://localhost:9000/api/responsaveis/'+responsavel._id)
       const data = await res.data
-      console.log(data)
+
+      setResponsaveis(prev=> {return prev.filter((r)=>{
+        return r._id !=data._id
+      })})
     }
-    setReponsavelId(null)
+    setReponsavel({nome:""})
 
   }
 
   const deletarResponsavel = async (e) => {
-    setReponsavelId(e.target.id)
-    setModalShow(true)
+    const res = await axios.get('http://localhost:9000/api/responsaveis/' + e.target.id)
+      const data = await res.data
 
+    setReponsavel(data)
+    setModalShow(true)
   }
 
   useEffect(() => {
@@ -101,8 +111,8 @@ const ResponsavelPage = () => {
               <td>{data.email}</td>
               <td>{data.tipo}</td>
               <td style={{ textAlign: 'center' }}>
-                <Button onClick={editarResponsavel} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
-                <Button className="mx-1" variant='outline-secondary' size="sm"><EditIcon /></Button>
+                <Button data-id={data._id} onClick={detalharResponsavel} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
+                <Button data-id={data._id} className="mx-1" variant='outline-secondary' onClick={editarResponsavel} size="sm"><EditIcon /></Button>
                 <Button id={data._id} onClick={deletarResponsavel} variant='outline-secondary' size="sm">
                   <DeleteIcon style={{ pointerEvents: "none" }}></DeleteIcon>
                 </Button>
@@ -112,12 +122,13 @@ const ResponsavelPage = () => {
         </tbody>
 
       </Table>}
-
+          
       <MyModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         backdrop="static"
         title="Confirmação de exclusão"
+        text={"Gostaria de excluir "+responsavel.nome } 
         answer={confirmaExclusao}
       />
 

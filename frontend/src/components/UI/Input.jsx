@@ -15,6 +15,7 @@ const Input = (props) => {
         <input 
         className={style.input} 
         {...props}
+        
         onChange={(e)=>{setIputValue(e.target.value)}} />
     </div>
   )

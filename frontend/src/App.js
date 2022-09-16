@@ -9,9 +9,10 @@ import Convenente from "./pages/ConvenentePage";
 import Convenios from "./pages/ConveniosPage";
 import Dashboard from "./pages/DashboardPage";
 import Licitacao from "./pages/LicitacaoPage";
-import Pagamento from "./pages/PagamentoPage";
+import Pagamento from "./pages/pagamento/PagamentoPage";
 import ResponsavelListar from "./pages/responsavel/ResponsavelPage_Listar";
 import ResponsavelNovo from "./pages/responsavel/ResponsavelPage_Novo";
+import ResponsavelDetalhe from './pages/responsavel/Responsavel_Detalhe';
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
             <Route path="/licitacao" element={ <Licitacao />}/>
             <Route path="/responsavel" element={ <ResponsavelListar />}/>
             <Route path="/responsavel/novo" element={ <ResponsavelNovo />}/>
+            <Route path="/responsavel/editar/:id" element={ <ResponsavelNovo />}/>
+            <Route path="/responsavel/:id" element={ <ResponsavelDetalhe />}/>
             <Route path="/" element={ <Dashboard />}/>
 
           </Routes>
