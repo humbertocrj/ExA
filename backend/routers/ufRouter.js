@@ -17,7 +17,7 @@ ufRouter.post('/novo',asyncHandler(async (req, res, next) =>{
 }) )
 
 ufRouter.get('/', asyncHandler(async (req,res)=>{
-    const docs = await Uf.find({})
+    const docs = await Uf.find({}).sort({nome:1})
     res.json(docs)
 }))
 

@@ -6,7 +6,7 @@ import UF from '../models/ufModel.js'
 const convenenteRouter = express.Router();
 
 convenenteRouter.get('/', asyncHandler(async (req, res)=>{
-    const docs = await Convenente.find({})
+    const docs = await Convenente.find({}).populate("uf")
  
     res.json(docs)
 }))

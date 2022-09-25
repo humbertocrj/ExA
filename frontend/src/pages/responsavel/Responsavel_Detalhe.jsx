@@ -11,23 +11,24 @@ import Col from 'react-bootstrap/esm/Col';
 
 const ResponsavelDetalhe = () => {
   const [responsavel, setResponsavel] = useState([])
-  const id = useParams()
+  const params = useParams()
 
   const getResponsavel = async (id) => {
-    const res = await axios.get('http://localhost:9000/api/responsaveis/631ce6c95ef6d8be518d89a6')
+    const res = await axios.get('http://localhost:9000/api/responsaveis/'+id)
+    
 
     setResponsavel(res.data)
   }
 
   useEffect(() => {
-    getResponsavel(id).then(() => {
+    getResponsavel(params.id).then(() => {
 
     })
-  }, [])
+  }, [params.id])
 
   return (
     <div>
-      <Title text="Detalhar Responsável" />
+      <Title text="Detalhes do Responsável" />
 
       <Row>
         <Col>
