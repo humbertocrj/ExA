@@ -9,10 +9,15 @@ import ConvenenteListar from "./pages/convenente/ConvenentePage_Listar";
 import ConvenenteNovo from "./pages/convenente/ConvenentePage_Novo"
 import ConvenenteDetalhe from "./pages/convenente/ConvenentePage_Detalhe"
 
-import Convenios from "./pages/convenios/ConveniosPage";
+import ConveniosListar from "./pages/convenios/ConveniosPage_Listar";
+import ConveniosNovo from "./pages/convenios/ConveniosPage_Novo"
+
 import Dashboard from "./pages/dashboard/DashboardPage";
+
 import Licitacao from "./pages/licitacao/LicitacaoPage";
-import Pagamento from "./pages/pagamento/PagamentoPage";
+
+import Pagamento from "./pages/pagamento/PagamentoPage_Listar";
+
 import ResponsavelListar from "./pages/responsavel/ResponsavelPage_Listar";
 import ResponsavelNovo from "./pages/responsavel/ResponsavelPage_Novo";
 import ResponsavelDetalhe from './pages/responsavel/Responsavel_Detalhe';
@@ -25,7 +30,8 @@ function App() {
         <Sidebar />
         <Main>
           <Routes>
-            <Route path="/convenios" element={ <Convenios />}/>
+            <Route path="/convenios" element={ <ConveniosListar />}/>
+            <Route path="/convenios/novo" element={ <ConveniosNovo />}/>
 
             <Route path="/convenente" element={ <ConvenenteListar />}/>
             <Route path="/convenente/novo" element={ <ConvenenteNovo />}/>
