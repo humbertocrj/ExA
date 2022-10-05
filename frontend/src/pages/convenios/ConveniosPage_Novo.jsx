@@ -19,9 +19,10 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
+import dateFormat from "../../utils/date"
 
 const ConveniosPage = () => {
-    let [numeroCV, setNome] = useState("")
+    let [numeroCV, setNumeroCV] = useState("")
     let [processo, setProcesso] = useState("")
     let [proposta, setProposta] = useState("")
     let [tipoProjeto, setTipoProjeto] = useState("")
@@ -49,14 +50,28 @@ const ConveniosPage = () => {
 
     const navigate = useNavigate()
 
+   
+
     useEffect(() => {
 
         if (id) {
             getConvenio(id).then((res) => {
+                             
+            
+                setNumeroCV(res.numeroCV)
+                setObjeto(res.objeto)
+                setPrograma(res.numeroPrograma)
+                setProposta(res.numeroProposta)
+                setProcesso(res.numeroProcesso)
+                setContrapartida(res.contrapartida)
+                setRecursoConcedente(res.recursoConcedente)
+                setTipoProjeto(res.tipoDeProjeto)
+                setTipoSelecao(res.formaDeSelecao)
+                setInicioVigencia(dateFormat(res.inicioVigencia))
+                setTerminoVigencia(dateFormat(res.terminoVigencia))
+                setInicioExecucao(dateFormat(res.dataRealizacaoInicio))
+                setTerminoExecucao(dateFormat(res.dataRealizacaoFim))
 
-                setNome(res.numeroCV)
-                setProcesso(res.cnpj)
-                
             })
         }
     }, [])
@@ -64,13 +79,13 @@ const ConveniosPage = () => {
     const submitHandler = async (e) => {
 
         e.preventDefault();
-      
+
         const convenio = {
             numeroCV: numeroCV,
             objeto: objeto,
             numeroPrograma: programa,
-            numeroProposta:proposta,
-            numeroProcesso:processo,
+            numeroProposta: proposta,
+            numeroProcesso: processo,
             contrapartida: contrapartida,
             recursoConcedente: recursoConcedente,
             tipoDeProjeto: tipoProjeto,
@@ -89,11 +104,11 @@ const ConveniosPage = () => {
 
             setTimeout(() => {
                 setMensagemNovo(false)
-                
-                
+
+
             }, 2000)
         } else {
-            const res = await axios.patch('http://localhost:9000/api/responsaveis/' + id, convenio)
+            const res = await axios.patch('http://localhost:9000/api/convenios/' + id, convenio)
 
             setMensagemAtualizar(true)
 
@@ -127,7 +142,7 @@ const ConveniosPage = () => {
                             type="text"
                             id="numeroCV"
                             name="numeroCV"
-                            onChange={(e) => setNome(e.target.value)}
+                            onChange={(e) => setNumeroCV(e.target.value)}
                             value={numeroCV}
                             required
                         />
@@ -210,20 +225,20 @@ const ConveniosPage = () => {
                 </Row>
                 <Row>
                     <Col md="auto">
-                    <label htmlFor='recursoConcedente'>Recurso do Concedente*</label>
+                        <label htmlFor='recursoConcedente'>Recurso do Concedente*</label>
                         <input
                             type="number"
                             id="recursoConcedente"
                             name="recursoConcedente"
                             onChange={(e) => setRecursoConcedente(e.target.value)}
-                            value={recursoConcedente}
+                            value={(recursoConcedente)}
                             required
-                            step="any"
-                            
+                            step="0.01"
+
                         />
                     </Col>
                     <Col md="auto">
-                    <label htmlFor='contrapartida'>Contrapartida*</label>
+                        <label htmlFor='contrapartida'>Contrapartida*</label>
                         <input
                             type="number"
                             id="contrapartida"
@@ -232,13 +247,13 @@ const ConveniosPage = () => {
                             value={contrapartida}
                             required
                             step="any"
-                            
+
                         />
                     </Col>
                 </Row>
                 <Row>
-                <Col md="auto">
-                    <label htmlFor='inicioVigencia'>Início da Vigência*</label>
+                    <Col md="auto">
+                        <label htmlFor='inicioVigencia'>Início da Vigência*</label>
                         <input
                             type="date"
                             id="inicioVigencia"
@@ -246,11 +261,11 @@ const ConveniosPage = () => {
                             onChange={(e) => setInicioVigencia(e.target.value)}
                             value={inicioVigencia}
                             required
-                            
+
                         />
                     </Col>
                     <Col md="auto">
-                    <label htmlFor='terminoVigencia'>Término da Vigência*</label>
+                        <label htmlFor='terminoVigencia'>Término da Vigência*</label>
                         <input
                             type="date"
                             id="terminoVigencia"
@@ -261,7 +276,7 @@ const ConveniosPage = () => {
                         />
                     </Col>
                     <Col md="auto">
-                    <label htmlFor='InícioExecucao'>Início da Execução</label>
+                        <label htmlFor='InícioExecucao'>Início da Execução</label>
                         <input
                             type="date"
                             id="inicioExecucao"
@@ -271,7 +286,7 @@ const ConveniosPage = () => {
                         />
                     </Col>
                     <Col md="auto">
-                    <label htmlFor='terminoExecucao'>Término da Execução</label>
+                        <label htmlFor='terminoExecucao'>Término da Execução</label>
                         <input
                             type="date"
                             id="terminoExecucao"

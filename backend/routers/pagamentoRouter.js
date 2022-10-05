@@ -24,7 +24,7 @@ pagamentoRouter.post('/novo', asyncHandler(async (req, res)=>{
 }))
 
 pagamentoRouter.get('/', asyncHandler( async (req, res)=>{
-    const docs = await Pagamento.find({})
+    const docs = await Pagamento.find({}).populate("convenio")
 
     res.json(docs)
 }))

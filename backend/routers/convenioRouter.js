@@ -35,10 +35,18 @@ convenioRouter.post('/novo', asyncHandler(async (req, res,next)=>{
     res.json(convenio)
 }))
 
-convenioRouter.get('/:id', asyncHandler(async (req, res)=>{
-    const convenio = await Convenio.findById(req.params.id).populate("responsavel")
+convenioRouter.get('/numero', asyncHandler(async (req, res)=>{
+
+    const convenio = await Convenio.findOne({numeroCV:req.query.convenio})
     res.json(convenio)
 }))
+
+convenioRouter.get('/:id', asyncHandler(async (req, res)=>{
+    const convenio = await Convenio.findById(req.params.id).populate("responsavel")
+  
+    res.json(convenio)
+}))
+
 
 convenioRouter.patch('/:id',asyncHandler( async (req,res, next) => {
     const filter = req.params.id

@@ -31,21 +31,22 @@ import { FaTrashAlt } from "react-icons/fa";
 
 const PagamentoPage = () => {
 
-  const [convenentes, setConvenentes] = useState(null)
+  const [pagamentos, setPagamentos] = useState(null)
   const [modalShow, setModalShow] = useState(false)
   const [deletar, setDeletar] = useState(false)
   const [convenente, setConvenente] = useState({nome:""})
   
-  const getConvenentes = async () => {
-    const res = await axios.get('http://localhost:9000/api/convenentes')
+  const getPagamentos = async () => {
+    const res = await axios.get('http://localhost:9000/api/pagamentos')
     const data = await res.data
-    setConvenentes(data)
+    setPagamentos(data)
+     
 
   }
   const navigate = useNavigate()
 
-  const novoConvenente = () => {
-    navigate('/convenente/novo')
+  const novoPagamento = () => {
+    navigate('/pagamento/novo')
   }
   const detalharConvenente = (e)=>{
     const id = e.currentTarget.dataset.id
@@ -58,10 +59,10 @@ const PagamentoPage = () => {
   }
   const confirmaExclusao = async (answer) => {
     if (answer) {
-      const res = await axios.delete('http://localhost:9000/api/convenentes/'+convenente.id)
+      const res = await axios.delete('http://localhost:9000/api/pagamentos/'+convenente.id)
       const data = await res.data
 
-      setConvenentes(prev=> {return prev.filter((r)=>{
+      setPagamentos(prev=> {return prev.filter((r)=>{
         return r._id !== data._id
       })})
     }
@@ -70,7 +71,7 @@ const PagamentoPage = () => {
   }
 
   const deletarConvenente = async (e) => {
-    const res = await axios.get('http://localhost:9000/api/convenentes/' + e.target.id)
+    const res = await axios.get('http://localhost:9000/api/pagamentos/' + e.target.id)
       const data = await res.data
 
     setConvenente(data)
@@ -78,38 +79,42 @@ const PagamentoPage = () => {
   }
 
   useEffect(() => {
-    getConvenentes()
+    getPagamentos()
   }, [])
 
 
   return (
     <div>
 
-      <Title text="Lista de convenentes" />
+      <Title text="Lista de pagamentos" />
       <Row className="mt-4">
         <Col md={9}></Col>
         <Col md={3} className="d-flex justify-content-end">
-          <Btn size="md" className="px-5" text="Novo" onClick={novoConvenente} />
+          <Btn size="md" className="px-5" text="Novo" onClick={novoPagamento} />
         </Col>
       </Row>
-      {convenentes && <Table striped bordered hover className="mt-4">
+      {pagamentos && <Table striped bordered hover className="mt-4">
         <thead>
           <tr>
             <th>Id</th>
-            <th>Nome</th>
-            <th>CNPJ</th>
-            <th>UF</th>
+            <th>Convenio</th>
+            <th>Objeto</th>
+            <th>Forma de Seleção</th>
+            <th>Parcela</th>
+            <th>Valor</th>
             <th>Ação</th>
 
           </tr>
         </thead>
         <tbody>
-          {convenentes.map((data, key) => {
+          {pagamentos.map((data, key) => {
             return (<tr key={key}>
               <td>{key + 1}</td>
-              <td>{data.nome}</td>
-              <td>{data.cnpj}</td>
-              <td>{data.uf.nome}</td>
+              <td>{data.convenio.numeroCV}</td>
+              <td>{data.convenio.objeto}</td>
+              <td>{data.convenio.formaDeSelecao}</td>
+              <td>{data.numeroParcela}</td>
+              <td>{data.valor}</td>
               <td style={{ textAlign: 'center' }}>
                 <Button data-id={data._id} onClick={detalharConvenente} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
                 <Button data-id={data._id} className="mx-1" variant='outline-secondary' onClick={editarConvenente} size="sm"><EditIcon /></Button>

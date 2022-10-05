@@ -47,13 +47,13 @@ const ConveniosPage = () => {
   const novoConvenio = () => {
     navigate('/convenios/novo')
   }
-  const detalharConvenente = (e)=>{
+  const detalharConvenio = (e)=>{
     const id = e.currentTarget.dataset.id
-    navigate('/convenio/'+id)
+    navigate('/convenios/'+id)
   }
-  const editarConvenente = (e) => {
+  const editarConvenio = (e) => {
     const id = e.currentTarget.dataset.id
-    navigate('/convenio/editar/'+id)
+    navigate('/convenios/editar/'+id)
     
   }
   const confirmaExclusao = async (answer) => {
@@ -113,8 +113,8 @@ const ConveniosPage = () => {
               <td>{data.numeroProcesso}</td>
               <td>{data.objeto}</td>
               <td style={{ textAlign: 'center' }}>
-                <Button data-id={data._id} onClick={detalharConvenente} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
-                <Button data-id={data._id} className="mx-1" variant='outline-secondary' onClick={editarConvenente} size="sm"><EditIcon /></Button>
+                <Button data-id={data._id} onClick={detalharConvenio} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
+                <Button data-id={data._id} className="mx-1" variant='outline-secondary' onClick={editarConvenio} size="sm"><EditIcon /></Button>
                 <Button id={data._id} onClick={deletarConvenio} variant='outline-secondary' size="sm">
                   <DeleteIcon style={{ pointerEvents: "none" }}></DeleteIcon>
                 </Button>
