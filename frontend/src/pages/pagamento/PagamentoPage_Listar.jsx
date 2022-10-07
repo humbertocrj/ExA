@@ -1,4 +1,4 @@
-import React, { useState} from 'react'
+import React, { useState } from 'react'
 import {
   BrowserRouter as Router,
   Switch,
@@ -9,7 +9,7 @@ import {
   useLocation
 } from "react-router-dom";
 import Title from '../../components/UI/Title'
- 
+
 
 import Btn from '../../components/UI/Button'
 import MyModal from '../../components/UI/MyModal'
@@ -28,19 +28,20 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from 'react-bootstrap/Button';
 import { FaTrashAlt } from "react-icons/fa";
+import {floatToCurrency} from '../../utils/currency';
 
 const PagamentoPage = () => {
 
   const [pagamentos, setPagamentos] = useState(null)
   const [modalShow, setModalShow] = useState(false)
   const [deletar, setDeletar] = useState(false)
-  const [convenente, setConvenente] = useState({nome:""})
-  
+  const [convenente, setConvenente] = useState({ nome: "" })
+
   const getPagamentos = async () => {
     const res = await axios.get('http://localhost:9000/api/pagamentos')
     const data = await res.data
     setPagamentos(data)
-     
+
 
   }
   const navigate = useNavigate()
@@ -48,31 +49,33 @@ const PagamentoPage = () => {
   const novoPagamento = () => {
     navigate('/pagamento/novo')
   }
-  const detalharConvenente = (e)=>{
+  const detalharConvenente = (e) => {
     const id = e.currentTarget.dataset.id
-    navigate('/convenente/'+id)
+    navigate('/convenente/' + id)
   }
   const editarConvenente = (e) => {
     const id = e.currentTarget.dataset.id
-    navigate('/convenente/editar/'+id)
-    
+    navigate('/convenente/editar/' + id)
+
   }
   const confirmaExclusao = async (answer) => {
     if (answer) {
-      const res = await axios.delete('http://localhost:9000/api/pagamentos/'+convenente.id)
+      const res = await axios.delete('http://localhost:9000/api/pagamentos/' + convenente.id)
       const data = await res.data
 
-      setPagamentos(prev=> {return prev.filter((r)=>{
-        return r._id !== data._id
-      })})
+      setPagamentos(prev => {
+        return prev.filter((r) => {
+          return r._id !== data._id
+        })
+      })
     }
-    setConvenente({nome:""})
+    setConvenente({ nome: "" })
 
   }
 
   const deletarConvenente = async (e) => {
     const res = await axios.get('http://localhost:9000/api/pagamentos/' + e.target.id)
-      const data = await res.data
+    const data = await res.data
 
     setConvenente(data)
     setModalShow(true)
@@ -103,7 +106,6 @@ const PagamentoPage = () => {
             <th>Parcela</th>
             <th>Valor</th>
             <th>Ação</th>
-
           </tr>
         </thead>
         <tbody>
@@ -114,7 +116,7 @@ const PagamentoPage = () => {
               <td>{data.convenio.objeto}</td>
               <td>{data.convenio.formaDeSelecao}</td>
               <td>{data.numeroParcela}</td>
-              <td>{data.valor}</td>
+              <td>{floatToCurrency(data.valor)}</td>
               <td style={{ textAlign: 'center' }}>
                 <Button data-id={data._id} onClick={detalharConvenente} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
                 <Button data-id={data._id} className="mx-1" variant='outline-secondary' onClick={editarConvenente} size="sm"><EditIcon /></Button>
@@ -127,13 +129,13 @@ const PagamentoPage = () => {
         </tbody>
 
       </Table>}
-          
+
       <MyModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         backdrop="static"
         title="Confirmação de exclusão"
-        text={"Gostaria de excluir "+convenente.nome } 
+        text={"Gostaria de excluir " + convenente.nome}
         answer={confirmaExclusao}
       />
 

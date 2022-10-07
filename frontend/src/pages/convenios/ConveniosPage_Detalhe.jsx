@@ -20,7 +20,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import dateFormat from "../../utils/date"
-import {format} from 'date-fns'
+import {format, parseISO} from 'date-fns'
 
 const ConveniosPage = () => {
     let [numeroCV, setNumeroCV] = useState("")
@@ -67,10 +67,10 @@ const ConveniosPage = () => {
                 setRecursoConcedente(res.recursoConcedente)
                 setTipoProjeto(res.tipoDeProjeto)
                 setTipoSelecao(res.formaDeSelecao)
-                setInicioVigencia(format(new Date(res.inicioVigencia), 'dd/MM/yyyy'))
-                setTerminoVigencia(dateFormat(res.terminoVigencia))
-                setInicioExecucao(dateFormat(res.dataRealizacaoInicio))
-                setTerminoExecucao(dateFormat(res.dataRealizacaoFim))
+                setInicioVigencia(dateFormat(res.inicioVigencia, true))
+                setTerminoVigencia(dateFormat(res.terminoVigencia,true))
+                setInicioExecucao(dateFormat(res.dataRealizacaoInicio,true))
+                setTerminoExecucao(dateFormat(res.dataRealizacaoFim, true))
 
             })
         }

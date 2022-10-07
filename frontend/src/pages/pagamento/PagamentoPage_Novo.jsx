@@ -2,9 +2,6 @@ import React, { useState } from 'react'
 import { Link, useNavigate, useParams } from 'react-router-dom'
 import Title from '../../components/UI/Title'
 
-
-import Input from '../../components/UI/Input'
-import Select from '../../components/UI/Select'
 import Btn from '../../components/UI/Button'
 import Message from '../../components/UI/Message'
 
@@ -19,19 +16,24 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
+import dateFormat from "../../utils/date"
+import {floatToCurrency, currencyToFloat} from '../../utils/currency'
+ 
+
+import ConsultarConvenio from '../../components/ConsultarConvenio'
 
 const PagamentoPage = () => {
-  let [parcela, setParcela] = useState("")
-  let [dataPrevista, setDataPrevista] = useState("")
-  let [dataRealizada, setDataRealizada] = useState("")
-  let [pago, setPago] = useState(false)
-  let [observacao, setObservacao] = useState("")
-  let [convenio, setConvenio] = useState("")
-  let [exibirFormulario, setExibirFormulario] = useState(false)
-  let [numeroEmpenho, setNumeroEmpenho] = useState("")
+  const [parcela, setParcela] = useState("")
+  const [valor, setValor] = useState("")
+  const [dataPrevista, setDataPrevista] = useState("")
+  const [dataRealizada, setDataRealizada] = useState("")
+  const [pago, setPago] = useState(false)
+  const [observacao, setObservacao] = useState("")
+  const [convenio, setConvenio] = useState("")
+  const [exibirFormulario, setExibirFormulario] = useState(false)
+  const [numeroEmpenho, setNumeroEmpenho] = useState("")
 
-  const [mostrarForm, setMostrarForm] = useState(false)
-  const [responsaveis, setResponsaveis] = useState(null)
+
   const [mensagemNovo, setMensagemNovo] = useState(false)
   const [mensagemAtualizar, setMensagemAtualizar] = useState(false)
   const { id } = useParams()
@@ -42,9 +44,14 @@ const PagamentoPage = () => {
     return res.data
   }
 
-  const getConvenio = async (numero) => {
-    const res = await axios.get('http://localhost:9000/api/convenios/numero?convenio=' + numero)
-    return res.data
+  const consultarConvenio = (convenio) => {
+    if (convenio) {
+      setExibirFormulario(true)
+      setConvenio(convenio)
+    }else{
+      setExibirFormulario(false)
+      setConvenio("")
+    }
   }
 
   const navigate = useNavigate()
@@ -52,32 +59,31 @@ const PagamentoPage = () => {
 
     if (id) {
       getResponsavel(id).then((res) => {
-
         setParcela(res.parcela)
         setDataPrevista(res.dataPrevista)
         setNumeroEmpenho(res.numeroEmpenho)
         setPago(res.pago)
         setObservacao(res.observacao)
-
       })
-
     }
   }, [])
 
   const submitHandler = async (e) => {
 
     e.preventDefault();
-    const responsavel = {
-      parcela: parcela,
+    const pagamento = {
+      numeroParcela: parcela,
+      valor:currencyToFloat(valor),
       dataPrevista: dataPrevista,
       dataRealizada: dataRealizada,
       numeroEmpenho: numeroEmpenho,
       pago: pago,
       observacao: observacao,
+      convenio:convenio._id
     }
 
     if (!id) {
-      const res = await axios.post('http://localhost:9000/api/responsaveis/novo', responsavel)
+      const res = await axios.post('http://localhost:9000/api/pagamentos/novo', pagamento)
 
       setMensagemNovo(true)
 
@@ -92,7 +98,7 @@ const PagamentoPage = () => {
 
       }, 2000)
     } else {
-      const res = await axios.patch('http://localhost:9000/api/responsaveis/' + id, responsavel)
+      const res = await axios.patch('http://localhost:9000/api/pagamentos/' + id, pagamento)
 
       setMensagemAtualizar(true)
 
@@ -103,13 +109,7 @@ const PagamentoPage = () => {
 
   }//submitHandler
 
-  const consultarConvenio = async (e) => {
-    e.preventDefault();
-    const res = await getConvenio(convenio)
-    if (res) {
-      setExibirFormulario(true)
-    }
-  }
+
   const titulo = (id ? "editar " : "adicionar ") + "pagamento"
 
   return (
@@ -126,23 +126,9 @@ const PagamentoPage = () => {
         </Col>
       </Row>
 
-      <Row>
-        <Col>
-          <form className="d-flex" onSubmit={consultarConvenio}>
-            <input
-              type="text"
-              id="numero"
-              placeholder='Digite o número do convênio.'
-              value={convenio}
-              onChange={(e) => setConvenio(e.target.value)}
-            />
-            <button className="btn btn-primary">Consultar</button>
-          </form>
-        </Col>
-      </Row>
+      <ConsultarConvenio consulta={consultarConvenio}/>
 
-
-      {exibirFormulario && (<form onSubmit={submitHandler}>
+      {exibirFormulario && (<form className="mt-4" onSubmit={submitHandler}>
         <Row>
           <Col md="auto">
             <label htmlFor="parcela">Número da parcela*</label>
@@ -158,6 +144,20 @@ const PagamentoPage = () => {
             />
           </Col>
           <Col md="auto">
+            <label htmlFor="valor">Valor*</label>
+            <input
+              type="text"
+              id="valor"
+              name="valor"
+              onChange={(e) => floatToCurrency(e.target.value, true, setValor)}
+              value={(valor)}
+              required
+            />
+     
+          </Col>
+        </Row>
+        <Row>
+        <Col md="auto">
             <label htmlFor='dataPrevista'>Data prevista*</label>
             <input
               type="date"
@@ -174,27 +174,25 @@ const PagamentoPage = () => {
               type="date"
               id="dataRealizada"
               name="dataRealizada"
-              onChange={(e) => setDataPrevista(e.target.value)}
+              onChange={(e) => setDataRealizada(e.target.value)}
               value={dataRealizada}
               required
             />
           </Col>
-        </Row>
-        <Row>
           <Col md={4}>
 
-            <label htmlFor="numeroEmpenho">Número do Empenho</label>
+            <label htmlFor="numeroEmpenho">Número do Empenho*</label>
             <input
               type="text"
               name="numeroEmpenho"
               id="numeroEmpenho"
               onChange={(e) => setNumeroEmpenho(e.target.value)}
               value={numeroEmpenho}
+              required
             />
 
           </Col>
           <Col md="auto" className="d-flex align-items-center justify-content-center mt-2">
-
             <input
               type="checkbox"
               id="pago"
@@ -203,7 +201,6 @@ const PagamentoPage = () => {
               checked={pago}
             />
             <label className="m-2" htmlFor="pago">Pago</label>
-
           </Col>
         </Row>
         <Row>
@@ -217,7 +214,6 @@ const PagamentoPage = () => {
               value={observacao}
               className="w-100"
               rows="5"
-
               required
             />
           </Col>
