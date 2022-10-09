@@ -19,6 +19,7 @@ import Licitacao from "./pages/licitacao/LicitacaoPage";
 
 import PagamentoListar from "./pages/pagamento/PagamentoPage_Listar";
 import PagamentoNovo from "./pages/pagamento/PagamentoPage_Novo";
+import PagamentoDetalhe from './pages/pagamento/PagamentoPage_Detalhe'
 
 import ResponsavelListar from "./pages/responsavel/ResponsavelPage_Listar";
 import ResponsavelNovo from "./pages/responsavel/ResponsavelPage_Novo";
@@ -44,6 +45,8 @@ function App() {
 
             <Route path="/pagamento" element={ <PagamentoListar />}/>
             <Route path="/pagamento/novo" element={ <PagamentoNovo />}/>
+            <Route path="/pagamento/editar/:id" element={ <PagamentoNovo />}/>
+            <Route path="/pagamento/:id" element={ <PagamentoDetalhe />}/>
 
             <Route path="/licitacao" element={ <Licitacao />}/>
 

@@ -7,6 +7,7 @@ export const floatToCurrency = (value, input, setValue)=>{
         newValue = (newValue/100).toFixed(2) + '';
         newValue = newValue.replace(".", ",");
         newValue = newValue.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+        newValue = "R$"+newValue
         setValue(newValue)
         return newValue
     }
@@ -15,7 +16,8 @@ export const floatToCurrency = (value, input, setValue)=>{
 }
 
 export const currencyToFloat = (value)=>{
-    let newValue = value.replace(".","")
+    let newValue = value.replaceAll(".","")
+    newValue = newValue.replace("R$", "")
     newValue = newValue.replace(",",".")
     newValue = parseFloat(newValue)
  

@@ -21,6 +21,7 @@ import {floatToCurrency, currencyToFloat} from '../../utils/currency'
  
 
 import ConsultarConvenio from '../../components/ConsultarConvenio'
+import InfoConvenio from '../../components/InfoConvenio'
 
 const PagamentoPage = () => {
   const [parcela, setParcela] = useState("")
@@ -36,10 +37,11 @@ const PagamentoPage = () => {
 
   const [mensagemNovo, setMensagemNovo] = useState(false)
   const [mensagemAtualizar, setMensagemAtualizar] = useState(false)
+
   const { id } = useParams()
 
-  const getResponsavel = async (id) => {
-    const res = await axios.get('http://localhost:9000/api/responsaveis/' + id)
+  const pagamento = async (id) => {
+    const res = await axios.get('http://localhost:9000/api/pagamentos/' + id)
 
     return res.data
   }
@@ -54,16 +56,19 @@ const PagamentoPage = () => {
     }
   }
 
-  const navigate = useNavigate()
   useEffect(() => {
 
     if (id) {
-      getResponsavel(id).then((res) => {
-        setParcela(res.parcela)
-        setDataPrevista(res.dataPrevista)
+      pagamento(id).then((res) => {
+        setParcela(res.numeroParcela)
+        setValor(floatToCurrency(res.valor))
+        setDataPrevista(dateFormat(res.dataPrevista))
+        setDataRealizada(dateFormat(res.dataRealizada))
         setNumeroEmpenho(res.numeroEmpenho)
         setPago(res.pago)
         setObservacao(res.observacao)
+        setExibirFormulario(true)
+        setConvenio(res.convenio)
       })
     }
   }, [])
@@ -71,6 +76,7 @@ const PagamentoPage = () => {
   const submitHandler = async (e) => {
 
     e.preventDefault();
+
     const pagamento = {
       numeroParcela: parcela,
       valor:currencyToFloat(valor),
@@ -81,7 +87,7 @@ const PagamentoPage = () => {
       observacao: observacao,
       convenio:convenio._id
     }
-
+   
     if (!id) {
       const res = await axios.post('http://localhost:9000/api/pagamentos/novo', pagamento)
 
@@ -126,8 +132,8 @@ const PagamentoPage = () => {
         </Col>
       </Row>
 
-      <ConsultarConvenio consulta={consultarConvenio}/>
-
+      {id?<InfoConvenio convenio={convenio} />:<ConsultarConvenio consulta={consultarConvenio}/>}
+      
       {exibirFormulario && (<form className="mt-4" onSubmit={submitHandler}>
         <Row>
           <Col md="auto">

@@ -92,9 +92,9 @@ const ResponsavelPage = () => {
           <Btn size="md" className="px-5" text="Novo" onClick={novoResponsavel} />
         </Col>
       </Row>
-      {responsaveis && <Table striped bordered hover className="mt-4">
+      {responsaveis && <Table className="mt-4" striped bordered hover >
         <thead>
-          <tr>
+          <tr className="text-center">
             <th>Id</th>
             <th>Nome</th>
             <th>E-mail</th>
@@ -106,7 +106,7 @@ const ResponsavelPage = () => {
         <tbody>
           {responsaveis.map((data, key) => {
             return (<tr key={key}>
-              <td>{key + 1}</td>
+              <td className="text-center">{key + 1}</td>
               <td>{data.nome}</td>
               <td>{data.email}</td>
               <td>{data.tipo}</td>

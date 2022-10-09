@@ -34,8 +34,8 @@ const PagamentoPage = () => {
 
   const [pagamentos, setPagamentos] = useState(null)
   const [modalShow, setModalShow] = useState(false)
-  const [deletar, setDeletar] = useState(false)
-  const [convenente, setConvenente] = useState({ nome: "" })
+  const [convenio, setConvenio] = useState(false)
+  const [pagamento, setPagamento] = useState({ nome: "" })
 
   const getPagamentos = async () => {
     const res = await axios.get('http://localhost:9000/api/pagamentos')
@@ -49,18 +49,18 @@ const PagamentoPage = () => {
   const novoPagamento = () => {
     navigate('/pagamento/novo')
   }
-  const detalharConvenente = (e) => {
+  const detalharPagamento = (e) => {
     const id = e.currentTarget.dataset.id
-    navigate('/convenente/' + id)
+    navigate('/pagamento/' + id)
   }
-  const editarConvenente = (e) => {
+  const editarPagamento = (e) => {
     const id = e.currentTarget.dataset.id
-    navigate('/convenente/editar/' + id)
+    navigate('/pagamento/editar/' + id)
 
   }
   const confirmaExclusao = async (answer) => {
     if (answer) {
-      const res = await axios.delete('http://localhost:9000/api/pagamentos/' + convenente.id)
+      const res = await axios.delete('http://localhost:9000/api/pagamentos/' + pagamento._id)
       const data = await res.data
 
       setPagamentos(prev => {
@@ -69,16 +69,19 @@ const PagamentoPage = () => {
         })
       })
     }
-    setConvenente({ nome: "" })
+    setPagamento({ nome: "" })
 
   }
 
-  const deletarConvenente = async (e) => {
+  const deletarPagamento = async (e) => {
     const res = await axios.get('http://localhost:9000/api/pagamentos/' + e.target.id)
     const data = await res.data
 
-    setConvenente(data)
+    setPagamento(data)
+    setConvenio(data.convenio)
     setModalShow(true)
+    
+    
   }
 
   useEffect(() => {
@@ -98,7 +101,7 @@ const PagamentoPage = () => {
       </Row>
       {pagamentos && <Table striped bordered hover className="mt-4">
         <thead>
-          <tr>
+          <tr className="text-center">
             <th>Id</th>
             <th>Convenio</th>
             <th>Objeto</th>
@@ -110,7 +113,7 @@ const PagamentoPage = () => {
         </thead>
         <tbody>
           {pagamentos.map((data, key) => {
-            return (<tr key={key}>
+            return (<tr className="text-center" key={key}>
               <td>{key + 1}</td>
               <td>{data.convenio.numeroCV}</td>
               <td>{data.convenio.objeto}</td>
@@ -118,9 +121,9 @@ const PagamentoPage = () => {
               <td>{data.numeroParcela}</td>
               <td>{floatToCurrency(data.valor)}</td>
               <td style={{ textAlign: 'center' }}>
-                <Button data-id={data._id} onClick={detalharConvenente} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
-                <Button data-id={data._id} className="mx-1" variant='outline-secondary' onClick={editarConvenente} size="sm"><EditIcon /></Button>
-                <Button id={data._id} onClick={deletarConvenente} variant='outline-secondary' size="sm">
+                <Button data-id={data._id} onClick={detalharPagamento} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
+                <Button data-id={data._id} className="mx-1" variant='outline-secondary' onClick={editarPagamento} size="sm"><EditIcon /></Button>
+                <Button id={data._id} onClick={deletarPagamento} variant='outline-secondary' size="sm">
                   <DeleteIcon style={{ pointerEvents: "none" }}></DeleteIcon>
                 </Button>
               </td>
@@ -135,7 +138,7 @@ const PagamentoPage = () => {
         onHide={() => setModalShow(false)}
         backdrop="static"
         title="Confirmação de exclusão"
-        text={"Gostaria de excluir " + convenente.nome}
+        text={"Gostaria de excluir parcela " + pagamento.numeroParcela+" do convênio "+convenio.numeroCV}
         answer={confirmaExclusao}
       />
 

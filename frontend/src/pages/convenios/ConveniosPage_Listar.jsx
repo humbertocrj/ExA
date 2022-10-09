@@ -94,7 +94,7 @@ const ConveniosPage = () => {
       </Row>
       {convenios && <Table striped bordered hover className="mt-4">
         <thead>
-          <tr>
+          <tr className="text-center">
             <th>Id</th>
             <th>CV</th>
             <th>Proposta</th>
@@ -106,9 +106,9 @@ const ConveniosPage = () => {
         </thead>
         <tbody>
           {convenios.map((data, key) => {
-            return (<tr key={key}>
-              <td>{key + 1}</td>
-              <td>{data.numeroCV}</td>
+            return (<tr  key={key}>
+              <td className="text-center">{key + 1}</td>
+              <td >{data.numeroCV}</td>
               <td>{data.numeroProposta}</td>
               <td>{data.numeroProcesso}</td>
               <td>{data.objeto}</td>

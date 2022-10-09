@@ -16,6 +16,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import 'bootstrap/dist/css/bootstrap.css';
+import {cnpjFormat} from '../../utils/cnpj'
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
@@ -131,8 +132,9 @@ const ConvenentePage = () => {
               type="cnpj"
               id="cnpj"
               nome="cnpj"
-              onChange={(e) => setCnpj(e.target.value)}
-              value={cnpj}
+              onChange={(e) => setCnpj((e.target.value))}
+              maxlength="18"
+              value={cnpjFormat(cnpj)}
               required
             />
           </Col>
