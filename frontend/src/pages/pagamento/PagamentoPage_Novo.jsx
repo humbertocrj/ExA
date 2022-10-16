@@ -17,8 +17,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import dateFormat from "../../utils/date"
-import {floatToCurrency, currencyToFloat} from '../../utils/currency'
- 
+import { floatToCurrency, currencyToFloat } from '../../utils/currency'
+
 
 import ConsultarConvenio from '../../components/ConsultarConvenio'
 import InfoConvenio from '../../components/InfoConvenio'
@@ -50,7 +50,7 @@ const PagamentoPage = () => {
     if (convenio) {
       setExibirFormulario(true)
       setConvenio(convenio)
-    }else{
+    } else {
       setExibirFormulario(false)
       setConvenio("")
     }
@@ -79,15 +79,15 @@ const PagamentoPage = () => {
 
     const pagamento = {
       numeroParcela: parcela,
-      valor:currencyToFloat(valor),
+      valor: currencyToFloat(valor),
       dataPrevista: dataPrevista,
       dataRealizada: dataRealizada,
       numeroEmpenho: numeroEmpenho,
       pago: pago,
       observacao: observacao,
-      convenio:convenio._id
+      convenio: convenio._id
     }
-   
+
     if (!id) {
       const res = await axios.post('http://localhost:9000/api/pagamentos/novo', pagamento)
 
@@ -132,8 +132,14 @@ const PagamentoPage = () => {
         </Col>
       </Row>
 
-      {id?<InfoConvenio convenio={convenio} />:<ConsultarConvenio consulta={consultarConvenio}/>}
-      
+      {id ? <InfoConvenio convenio={convenio} /> :
+        (<div><ConsultarConvenio consulta={consultarConvenio} />
+          <Link className="btn btn-outline-secondary" to="/pagamento">
+            <ArrowBackIosIcon fontSize='small' />
+            Voltar
+          </Link>
+        </div>)}
+
       {exibirFormulario && (<form className="mt-4" onSubmit={submitHandler}>
         <Row>
           <Col md="auto">
@@ -159,11 +165,11 @@ const PagamentoPage = () => {
               value={(valor)}
               required
             />
-     
+
           </Col>
         </Row>
         <Row>
-        <Col md="auto">
+          <Col md="auto">
             <label htmlFor='dataPrevista'>Data prevista*</label>
             <input
               type="date"

@@ -7,13 +7,18 @@ const aceiteLicitatorioRouter = express.Router()
 aceiteLicitatorioRouter.post('/novo',  asyncHandler(async (req, res)=>{
    
     const aceiteLicitatorio = new AceiteLicitatorio({
-        processoExecucao:"NÃO",
-        anexos:"NÃO",
-        esclarecimento:"NÃO",
-        contratoSubConvenio:"NÃO",
-        observacao:"Não há observação até o momento",
-        prorrogacao:false,
-        aceiteConcluido:false,
+        processoExecucao:req.body.processoExecucao,
+        anexos:req.body.anexos,
+        esclarecimento:req.body.esclarecimento,
+        contratoSubConvenio: req.body.contratoSubConvenio,
+        observacao:req.body.observacao,
+        prorrogacao:req.body.prorrogacao,
+        aceiteConcluido:req.body.aceiteConcluido,
+        status:req.body.status,
+        dataOficioAnulacao:req.body.dataOficioAnulacao,
+        analiseAprovada:req.body.analiseAprovada,
+        liberacaoFinanceira:req.body.liberacaoFinanceira,
+        movimentacaoFinanceira:req.body.movimentacaoFinanceira,
         convenio:req.body.convenio
     })
 
@@ -22,7 +27,7 @@ aceiteLicitatorioRouter.post('/novo',  asyncHandler(async (req, res)=>{
 }) )
 
 aceiteLicitatorioRouter.get('/', asyncHandler(async (req, res)=>{
-    const docs = await AceiteLicitatorio.find({})
+    const docs = await AceiteLicitatorio.find({}).populate('convenio')
 
     res.json(docs)
 }))
@@ -33,10 +38,16 @@ aceiteLicitatorioRouter.patch('/:id', asyncHandler(async (req, res)=>{
         processoExecucao:req.body.processoExecucao,
         anexos:req.body.anexos,
         esclarecimento:req.body.esclarecimento,
-        contratoSubConvenio:req.body.contratoSubConvenio,
+        contratoSubConvenio: req.body.contratoSubConvenio,
+        observacao:req.body.observacao,
         prorrogacao:req.body.prorrogacao,
-        observacao: req.body.observacao,
-        aceiteConcluido:req.body.aceiteConcluido
+        aceiteConcluido:req.body.aceiteConcluido,
+        status:req.body.status,
+        dataOficioAnulacao:req.body.dataOficioAnulacao,
+        analiseAprovada:req.body.analiseAprovada,
+        liberacaoFinanceira:req.body.liberacaoFinanceira,
+        movimentacaoFinanceira:req.body.movimentacaoFinanceira,
+        convenio:req.body.convenio
     }
 
     const doc = await AceiteLicitatorio.findByIdAndUpdate(filter, update, {returnOriginal:false})

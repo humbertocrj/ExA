@@ -20,17 +20,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import dateFormat from "../../utils/date"
-import {format, parseISO} from 'date-fns'
+import {floatToCurrency} from '../../utils/currency'
 
 const ConveniosPage = () => {
     let [numeroCV, setNumeroCV] = useState("")
     let [processo, setProcesso] = useState("")
     let [proposta, setProposta] = useState("")
     let [tipoProjeto, setTipoProjeto] = useState("")
-    const tipoProjetoSelect = ['Selecione o tipo', 'Marketing', 'Evento']
     const [objeto, setObjeto] = useState("")
     let [tipoSelecao, setTipoSelecao] = useState("")
-    const tipoSelecaoSelect = ['Selecione o tipo', 'Chamamento', 'Emenda']
     const [programa, setPrograma] = useState("")
     const [recursoConcedente, setRecursoConcedente] = useState("")
     const [contrapartida, setContrapartida] = useState("")
@@ -38,9 +36,7 @@ const ConveniosPage = () => {
     const [terminoVigencia, setTerminoVigencia] = useState("")
     let [inicioExecucao, setInicioExecucao] = useState("")
     const [terminoExecucao, setTerminoExecucao] = useState("")
-
-    const [mensagemNovo, setMensagemNovo] = useState(false)
-    const [mensagemAtualizar, setMensagemAtualizar] = useState(false)
+    
     const { id } = useParams()
 
     const getConvenio = async (id) => {
@@ -51,12 +47,10 @@ const ConveniosPage = () => {
 
     const navigate = useNavigate()
 
-
     useEffect(() => {
 
         if (id) {
             getConvenio(id).then((res) => {
-
 
                 setNumeroCV(res.numeroCV)
                 setObjeto(res.objeto)
@@ -76,8 +70,6 @@ const ConveniosPage = () => {
         }
     }, [])
 
-
-
     return (
         <div className="h-100">
             <Row>
@@ -91,54 +83,42 @@ const ConveniosPage = () => {
                 <Col>
                     <label htmlFor="numeroCV">Convênio</label>
                     {numeroCV}
-
                 </Col>
                 <Col>
                     <label htmlFor='processo'>Processo</label>
                     {processo}
-
                 </Col>
                 <Col>
                     <label htmlFor='processo'>Proposta</label>
                     {proposta}
-
                 </Col>
                 <Col md="auto">
-
                     <label htmlFor="tipo">Tipo de projeto</label>
                     {tipoProjeto}
-
                 </Col>
             </Row>
             <Row>
                 <Col>
                     <label htmlFor='processo'>Objeto</label>
                     {objeto}
-
                 </Col>
                 <Col md="auto">
-
                     <label htmlFor="tipo">Tipo de Seleção</label>
                     {tipoSelecao}
-
                 </Col>
                 <Col md={3}>
                     <label htmlFor='programa'>Programa</label>
                     {programa}
-
                 </Col>
             </Row>
             <Row>
                 <Col md="auto">
                     <label htmlFor='recursoConcedente'>Recurso do Concedente</label>
-                    {recursoConcedente}
-
+                    {floatToCurrency(recursoConcedente)}
                 </Col>
                 <Col md="auto">
                     <label htmlFor='contrapartida'>Contrapartida</label>
-
-                    {contrapartida}
-
+                    {floatToCurrency(contrapartida)}
                 </Col>
             </Row>
             <Row>

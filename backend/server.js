@@ -37,7 +37,7 @@ app.use('/api/ufs', ufRouter)
 app.use('/api/convenentes', convenenteRouter)
 app.use('/api/providencias', providenciasRouter)
 app.use('/api/pagamentos', pagamentoRouter)
-app.use('/api/aceite_licitacao', aceiteLicitatorioRouter)
+app.use('/api/licitacao', aceiteLicitatorioRouter)
 
 //Middle to catch error from express-async-handler
 app.use((err, req, res,next) => {

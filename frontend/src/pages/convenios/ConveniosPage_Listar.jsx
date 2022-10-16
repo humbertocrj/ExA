@@ -1,15 +1,7 @@
-import React, { useState} from 'react'
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useNavigate,
-  useLocation
-} from "react-router-dom";
+import React, { useState } from 'react'
+import { useNavigate} from "react-router-dom";
 import Title from '../../components/UI/Title'
- 
+
 
 import Btn from '../../components/UI/Button'
 import MyModal from '../../components/UI/MyModal'
@@ -34,8 +26,8 @@ const ConveniosPage = () => {
   const [convenios, setConvenios] = useState(null)
   const [modalShow, setModalShow] = useState(false)
   const [deletar, setDeletar] = useState(false)
-  const [convenio, setConvenio] = useState({nome:""})
-  
+  const [convenio, setConvenio] = useState({ nome: "" })
+
   const getConvenios = async () => {
     const res = await axios.get('http://localhost:9000/api/convenios')
     const data = await res.data
@@ -47,32 +39,34 @@ const ConveniosPage = () => {
   const novoConvenio = () => {
     navigate('/convenios/novo')
   }
-  const detalharConvenio = (e)=>{
+  const detalharConvenio = (e) => {
     const id = e.currentTarget.dataset.id
-    navigate('/convenios/'+id)
+    navigate('/convenios/' + id)
   }
   const editarConvenio = (e) => {
     const id = e.currentTarget.dataset.id
-    navigate('/convenios/editar/'+id)
-    
+    navigate('/convenios/editar/' + id)
+
   }
   const confirmaExclusao = async (answer) => {
     if (answer) {
-      const res = await axios.delete('http://localhost:9000/api/convenios/'+convenio._id)
+      const res = await axios.delete('http://localhost:9000/api/convenios/' + convenio._id)
       const data = await res.data
 
-      setConvenios(prev=> {return prev.filter((r)=>{
-        return r._id !== data._id
-      })})
+      setConvenios(prev => {
+        return prev.filter((r) => {
+          return r._id !== data._id
+        })
+      })
     }
-    setConvenio({nome:""})
+    setConvenio({ nome: "" })
 
   }
 
   const deletarConvenio = async (e) => {
     const res = await axios.get('http://localhost:9000/api/convenios/' + e.target.id)
-      const data = await res.data
-    console.log(data)
+    const data = await res.data
+   
     setConvenio(data)
     setModalShow(true)
   }
@@ -106,7 +100,7 @@ const ConveniosPage = () => {
         </thead>
         <tbody>
           {convenios.map((data, key) => {
-            return (<tr  key={key}>
+            return (<tr key={key}>
               <td className="text-center">{key + 1}</td>
               <td >{data.numeroCV}</td>
               <td>{data.numeroProposta}</td>
@@ -124,13 +118,13 @@ const ConveniosPage = () => {
         </tbody>
 
       </Table>}
-          
+
       <MyModal
         show={modalShow}
         onHide={() => setModalShow(false)}
         backdrop="static"
         title="Confirmação de exclusão"
-        text={"Gostaria de excluir "+convenio.numeroCV } 
+        text={"Gostaria de excluir " + convenio.numeroCV}
         answer={confirmaExclusao}
       />
 

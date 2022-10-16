@@ -15,7 +15,8 @@ import ConvenioDetalhe from "./pages/convenios/ConveniosPage_Detalhe"
 
 import Dashboard from "./pages/dashboard/DashboardPage";
 
-import Licitacao from "./pages/licitacao/LicitacaoPage";
+import LicitacaoListar from "./pages/licitacao/LicitacaoPage_Listar";
+import LicitacaoNovo from "./pages/licitacao/LicitacaoPage_Novo";
 
 import PagamentoListar from "./pages/pagamento/PagamentoPage_Listar";
 import PagamentoNovo from "./pages/pagamento/PagamentoPage_Novo";
@@ -48,7 +49,9 @@ function App() {
             <Route path="/pagamento/editar/:id" element={ <PagamentoNovo />}/>
             <Route path="/pagamento/:id" element={ <PagamentoDetalhe />}/>
 
-            <Route path="/licitacao" element={ <Licitacao />}/>
+            <Route path="/licitacao" element={ <LicitacaoListar />}/>
+            <Route path="/licitacao/novo" element={ <LicitacaoNovo />}/>
+            <Route path="/licitacao/editar/:id" element={ <LicitacaoNovo />}/>
 
             <Route path="/responsavel" element={ <ResponsavelListar />}/>
             <Route path="/responsavel/novo" element={ <ResponsavelNovo />}/>

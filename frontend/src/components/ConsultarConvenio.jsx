@@ -52,7 +52,7 @@ const ConsultarConvenio = (props) => {
           <input
             type="text"
             id="numero"
-            placeholder='Digite o número do convênio que deseja adicionar um pagamento'
+            placeholder='Digite o número do convênio que deseja pesquisar'
             value={convenio}
             onChange={(e) => setConvenio(e.target.value)}
           />

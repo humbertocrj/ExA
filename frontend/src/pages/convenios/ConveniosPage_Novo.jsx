@@ -20,6 +20,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 
 import dateFormat from "../../utils/date"
+import {floatToCurrency, currencyToFloat} from '../../utils/currency'
 
 const ConveniosPage = () => {
     let [numeroCV, setNumeroCV] = useState("")
@@ -50,21 +51,17 @@ const ConveniosPage = () => {
 
     const navigate = useNavigate()
 
-   
-
     useEffect(() => {
 
         if (id) {
             getConvenio(id).then((res) => {
-                             
-            
                 setNumeroCV(res.numeroCV)
                 setObjeto(res.objeto)
                 setPrograma(res.numeroPrograma)
                 setProposta(res.numeroProposta)
                 setProcesso(res.numeroProcesso)
-                setContrapartida(res.contrapartida)
-                setRecursoConcedente(res.recursoConcedente)
+                setContrapartida(floatToCurrency(res.contrapartida))
+                setRecursoConcedente(floatToCurrency(res.recursoConcedente))
                 setTipoProjeto(res.tipoDeProjeto)
                 setTipoSelecao(res.formaDeSelecao)
                 setInicioVigencia(dateFormat(res.inicioVigencia))
@@ -86,8 +83,8 @@ const ConveniosPage = () => {
             numeroPrograma: programa,
             numeroProposta: proposta,
             numeroProcesso: processo,
-            contrapartida: contrapartida,
-            recursoConcedente: recursoConcedente,
+            contrapartida: currencyToFloat(contrapartida),
+            recursoConcedente: currencyToFloat(recursoConcedente),
             tipoDeProjeto: tipoProjeto,
             formaDeSelecao: tipoSelecao,
             responsavel: [],
@@ -227,10 +224,10 @@ const ConveniosPage = () => {
                     <Col md="auto">
                         <label htmlFor='recursoConcedente'>Recurso do Concedente*</label>
                         <input
-                            type="number"
+                            type="text"
                             id="recursoConcedente"
                             name="recursoConcedente"
-                            onChange={(e) => setRecursoConcedente(e.target.value)}
+                            onChange={(e) => floatToCurrency(e.target.value, true,setRecursoConcedente)}
                             value={(recursoConcedente)}
                             required
                             step="0.01"
@@ -240,10 +237,10 @@ const ConveniosPage = () => {
                     <Col md="auto">
                         <label htmlFor='contrapartida'>Contrapartida*</label>
                         <input
-                            type="number"
+                            type="text"
                             id="contrapartida"
                             name="contrapartida"
-                            onChange={(e) => setContrapartida(e.target.value)}
+                            onChange={(e) => floatToCurrency(e.target.value, true,setContrapartida)}
                             value={contrapartida}
                             required
                             step="any"

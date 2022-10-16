@@ -105,11 +105,13 @@ const ResponsavelPage = () => {
         </Col>
       </Row>
       <Row >
-        <Col>
+        <Col >
         {mensagemNovo && <Message variant="success" text="Novo responsável salvo com sucesso!" />}
         {mensagemAtualizar && <Message variant="success" text="Responsável atualizado com sucesso!" />}
         </Col>
       </Row>
+
+    
       <form className={style["form-container"]} onSubmit={submitHandler}>
         <Row>
           <Col>

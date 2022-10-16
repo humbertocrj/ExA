@@ -21,7 +21,7 @@ const responsavelSchema = new mongoose.Schema({
         type:String
     },telefonePessoal:{
         type:String
-    } 
+    }
 })
 
 const Responsavel = mongoose.model('Responsavel', responsavelSchema)
