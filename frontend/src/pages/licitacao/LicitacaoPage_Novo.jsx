@@ -68,11 +68,11 @@ const LicitacaoPage = () => {
 
     if (id) {
       getLicitacao(id).then((res) => {
-        setProcessoExecucao(res.processoExecucao)
-        setEsclarecimento(res.esclarecimento)
-        setSubConvenio(res.contratoSubConvenio)
+        setProcessoExecucao(stringToBoolean(res.processoExecucao))
+        setEsclarecimento(stringToBoolean(res.esclarecimento))
+        setSubConvenio(stringToBoolean(res.contratoSubConvenio))
         setProrrogacao(stringToBoolean(res.prorrogacao))
-        setAnexo(res.anexos)
+        setAnexo(stringToBoolean(res.anexos))
         setObservacao(res.observacao)
         setExibirFormulario(true)
         setConvenio(res.convenio)
@@ -80,6 +80,7 @@ const LicitacaoPage = () => {
         setLiberacao(dateFormat(res.liberacaoFinanceira))
         setMovimentacao(dateFormat(res.movimentacaoFinanceira))
         setDataOficioAnulacao(dateFormat(res.dataOficioAnulacao))
+        console.log(res)
       })
     }
   }, [])
@@ -271,7 +272,7 @@ const LicitacaoPage = () => {
               name="observação"
               onChange={(e) => setObservacao(e.target.value)}
               value={observacao}
-              className="w-100"
+              className="w-100 p-3"
               rows="5"
               required
             />
