@@ -26,6 +26,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+
 import Button from 'react-bootstrap/Button';
 import { FaTrashAlt } from "react-icons/fa";
 import {floatToCurrency} from '../../utils/currency';
@@ -81,8 +83,6 @@ const PagamentoPage = () => {
     setLicitacao(data)
     setConvenio(data.convenio)
     setModalShow(true)
-    
-    
   }
 
   useEffect(() => {
@@ -107,7 +107,6 @@ const PagamentoPage = () => {
             <th>Convenio</th>
             <th>Objeto</th>
             <th>Status</th>
-          
           </tr>
         </thead>
         <tbody>

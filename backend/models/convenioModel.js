@@ -58,7 +58,10 @@ const convenioSchema = new mongoose.Schema({
         type:[Schema.Types.ObjectId],
         ref:"Responsavel"
     },
-   
+    convenente:{
+        type:Schema.Types.ObjectId,
+        ref:"Convenente"
+    }
 })
 
 const Convenio = mongoose.model('Convenio',convenioSchema)

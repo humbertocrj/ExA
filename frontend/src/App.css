@@ -8,3 +8,17 @@ flex: 1;
 display: flex;
 grid-template-columns: auto auto;
 }
+
+.btn-primary, .btn-primary:active, .btn-primary:visited {
+  background-color: #fbb902 !important;
+  border:#FFCD24 !important;
+}
+.btn-primary:hover{
+  background-color: #f5b402 !important;
+}
+.btn-warning{
+  color:#fff !important;
+}
+label{
+  color:#444 !important;
+}

@@ -4,7 +4,9 @@
     transition: 0.5s;
 
 }
-
+a{
+    color:#fff;
+}
 .hide{
     width: 55px;
 }
@@ -16,26 +18,26 @@
     font-size: 1.2rem;
     align-items: flex-end;
     margin-bottom: 5px;
-    transition: 0.2s;
+     
     text-decoration: none;
 }
 .sidebar-item:hover{
     background: #128ab5;
     cursor: pointer;
-    font-weight: 700;
+    color:#fff;
 }
 
 .sidebar-item span{
     margin-left: 10px;
-    transition: 0.5s;
+    
     
 }
 
 .sidebar.hide .sidebar-item span{
     opacity: 0;
     font-size: 0;
-
 }
+ 
 
 .toggle{
     position: relative;
@@ -51,7 +53,7 @@
     
 }
 
-.toggle-icon:hover{
+.sidebar-item:hover .toggle-icon{
     cursor: pointer;
-    transform: scale(1.1);
+    transform: scale(1.4);
 }

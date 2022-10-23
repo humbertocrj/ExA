@@ -19,7 +19,8 @@ let getConvenio = (req)=>{
         dataRealizacaoFim:req.body.dataRealizacaoFim,
         recursoConcedente:req.body.recursoConcedente,
         contrapartida:req.body.contrapartida,
-        responsavel:req.body.responsavel
+        responsavel:req.body.responsavel,
+        convenente:req.body.convenente
     }
 }
 

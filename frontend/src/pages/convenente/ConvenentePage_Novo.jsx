@@ -19,16 +19,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 import {cnpjFormat} from '../../utils/cnpj'
 
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import ConsultarConvenio from '../../components/ConsultarConvenio'
 
 
 const ConvenentePage = () => {
   let [nome, setNome] = useState("")
   let [cnpj, setCnpj] = useState("")
-  
   let [uf, setUF] = useState("")
-
   const [ufs, setUFs] = useState([])
-  const [mostrarForm, setMostrarForm] = useState(false)
+  const [convenio, setConvenio] = useState("")
+
+  const [exibirFormulario, setExibirFormulario] = useState(false)
   const [responsaveis, setResponsaveis] = useState(null)
   const [mensagemNovo, setMensagemNovo] = useState(false)
   const [mensagemAtualizar, setMensagemAtualizar] = useState(false)
@@ -48,6 +49,16 @@ const ConvenentePage = () => {
      
   }
 
+  const consultarConvenio = (convenio) => {
+    if (convenio) {
+      setExibirFormulario(true)
+      setConvenio(convenio)
+    } else {
+      setExibirFormulario(false)
+      setConvenio("")
+    }
+    
+  }
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -60,7 +71,7 @@ const ConvenentePage = () => {
         setNome(res.nome)
         setCnpj(res.cnpj)
         setUF(res.ufId)
-        console.log(res.ufId)
+        setExibirFormulario(true)
       })
     }
   }, [])
@@ -75,8 +86,19 @@ const ConvenentePage = () => {
     }
 
     if (!id) {
-      const res = await axios.post('http://localhost:9000/api/convenentes/novo', convenente)
+      let res = await axios.post('http://localhost:9000/api/convenentes/novo', convenente)
+      let convenent = await res.data
+      
+      convenio.convenente = convenent._id
 
+      setConvenio((prev)=>{
+        prev.convenente = convenent._id
+        return prev
+      })
+
+      res =await axios.patch(`http://localhost:9000/api/convenios/${convenio._id}`, convenio)
+     
+      console.log(res.data)
       setMensagemNovo(true)
 
       setTimeout(() => {
@@ -87,7 +109,7 @@ const ConvenentePage = () => {
          
       }, 2000)
     } else {
-      const res = await axios.patch('http://localhost:9000/api/responsaveis/' + id, convenente)
+      const res = await axios.patch('http://localhost:9000/api/convenentes/' + id, convenente)
 
       setMensagemAtualizar(true)
 
@@ -113,7 +135,10 @@ const ConvenentePage = () => {
         {mensagemAtualizar && <Message variant="success" text="Responsável atualizado com sucesso!" />}
         </Col>
       </Row>
-      <form   onSubmit={submitHandler}>
+
+     <ConsultarConvenio consulta={consultarConvenio} />
+
+     {exibirFormulario&& <form   onSubmit={submitHandler}>
         <Row>
           <Col>
             <label htmlFor="nome">Nome*</label>
@@ -133,7 +158,7 @@ const ConvenentePage = () => {
               id="cnpj"
               nome="cnpj"
               onChange={(e) => setCnpj((e.target.value))}
-              maxlength="18"
+              maxLength="18"
               value={cnpjFormat(cnpj)}
               required
             />
@@ -163,6 +188,7 @@ const ConvenentePage = () => {
           <Btn className="px-5" type="submit" text="Salvar" />
         </div>
       </form>
+      }
     </div>
 
   )
