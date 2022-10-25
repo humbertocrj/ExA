@@ -1,7 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import "./App.css";
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 import Main from "./components/Main";
 import { useState } from "react";
@@ -28,23 +27,28 @@ import ResponsavelListar from "./pages/responsavel/ResponsavelPage_Listar";
 import ResponsavelNovo from "./pages/responsavel/ResponsavelPage_Novo";
 import ResponsavelDetalhe from "./pages/responsavel/Responsavel_Detalhe";
 import ResponsavelConvenio from "./pages/responsavel/ResponsavelPage_RelConvenio";
-
 import Login from "./pages/Login";
+
 
 function App() {
   const [logged, setLogged] = useState(false);
+  const autenticado = (value) => {
+    if (value) {
+      setLogged(true)
+    } else {
+      setLogged(false)
+    }
+  }
 
   return (
     <div className="app">
-      {!logged ? (
-        <Login />
-      ) : (
+
+      {!logged ? <Login autenticado={autenticado}/> :
         <>
-          <Header logged={logged} />
+          <Header logged={logged} logout={setLogged}/>
           <div className="content">
-            : (
+            <Sidebar />
             <Main>
-              <Sidebar />
               <Routes>
                 <Route path="/convenios" element={<ConvenioListar />} />
                 <Route path="/convenios/novo" element={<ConvenioNovo />} />
@@ -96,11 +100,12 @@ function App() {
                 <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
             </Main>
-          </div>{" "}
-        </>
-      )}
+          </div>
+        </>}
+
     </div>
-  );
+
+  )
 }
 
 export default App;

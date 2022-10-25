@@ -1,13 +1,6 @@
 import React, { useState } from 'react'
 import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link,
-  Redirect,
-  useNavigate,
-  useLocation
-} from "react-router-dom";
+  useNavigate} from "react-router-dom";
 import Title from '../../components/UI/Title'
 
 
@@ -26,11 +19,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import PersonAddIcon from '@mui/icons-material/PersonAdd';
 
 import Button from 'react-bootstrap/Button';
-import { FaTrashAlt } from "react-icons/fa";
-import {floatToCurrency} from '../../utils/currency';
 
 const PagamentoPage = () => {
 
@@ -42,7 +32,7 @@ const PagamentoPage = () => {
   const getLicitacoes = async () => {
     const res = await axios.get('http://localhost:9000/api/licitacao')
     const data = await res.data
-     
+      
     setLicitacoes(data)
 
 
