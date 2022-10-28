@@ -3,18 +3,16 @@ const Schema = mongoose.Schema
 
 const aceiteLicitatorioSchema = new mongoose.Schema({
    
-    processoExecucao:String,
-    anexos:String,
-    esclarecimento:String,
-    contratoSubConvenio:String,
-    prorrogacao:Boolean,
+    processoExecucao:{type: Boolean, default:false},
+    anexos:{type: Boolean, default:false},
+    esclarecimento:{type: Boolean, default:false},
+    contratoSubConvenio:{type: Boolean, default:false},
+    prorrogacao:{type: Boolean, default:false},
     liberacaoFinanceira:Date,
     movimentacaoFinanceira:Date,
     observacao:String,
-    aceiteConcluido:Boolean,
     status:String,
     dataOficioAnulacao:Date,
-    analiseAprovada:Boolean,
     convenio:{
         type:Schema.Types.ObjectId,
         ref:'Convenio'

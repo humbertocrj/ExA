@@ -42,6 +42,10 @@ const convenioSchema = new mongoose.Schema({
         required:true,
         type:Date
     },
+    ano:{
+        required:true,
+        type:Number
+    },
     terminoVigencia:{
         required:true,
         type:Date

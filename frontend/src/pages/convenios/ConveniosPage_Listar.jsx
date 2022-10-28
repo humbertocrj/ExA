@@ -32,7 +32,7 @@ const ConveniosPage = () => {
     const res = await axios.get('http://localhost:9000/api/convenios')
     const data = await res.data
     setConvenios(data)
-
+    console.log(data)
   }
   const navigate = useNavigate()
 

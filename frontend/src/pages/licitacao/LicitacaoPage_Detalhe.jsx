@@ -59,9 +59,9 @@ const PagamentoPage = () => {
             setExibirFormulario(true)
             setConvenio(res.convenio)
             setStatus(res.status)
-            setLiberacao(dateFormat(res.liberacaoFinanceira, true))
-            setMovimentacao(dateFormat(res.movimentacaoFinanceira, true))
-            setDataOficioAnulacao(dateFormat(res.dataOficioAnulacao, true))
+            setLiberacao((res.movimentacaoFinanceira?dateFormat(res.liberacaoFinanceira, true):""))
+            setMovimentacao((res.movimentacaoFinanceira?dateFormat(res.movimentacaoFinanceira, true):""))
+            setDataOficioAnulacao((res.dataOficioAnulacao?dateFormat(res.dataOficioAnulacao, true):""))
         })
 
     }, [])

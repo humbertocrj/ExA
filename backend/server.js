@@ -11,6 +11,8 @@ import providenciasRouter from './routers/providenciasRouter.js'
 import pagamentoRouter from './routers/pagamentoRouter.js'
 import aceiteLicitatorioRouter from './routers/aceiteLicitatorioRouter.js'
 import usuarioRouter from './routers/usuarioRouter.js'
+import dashboardRouter from './routers/dashboardRouter.js';
+
 import cors from 'cors'
 
 const app = express();
@@ -39,6 +41,7 @@ app.use('/api/providencias', providenciasRouter)
 app.use('/api/pagamentos', pagamentoRouter)
 app.use('/api/licitacao', aceiteLicitatorioRouter)
 app.use('/api/usuario', usuarioRouter)
+app.use('/api/dashboard', dashboardRouter)
 
 //Middle to catch error from express-async-handler
 app.use((err, req, res,next) => {

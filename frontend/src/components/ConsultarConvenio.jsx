@@ -25,6 +25,7 @@ const ConsultarConvenio = (props) => {
 
   const getConvenio = async (numero) => {
     const res = await axios.get('http://localhost:9000/api/convenios/numero?convenio=' + numero)
+    console.log(numero)
     return res.data
   }
 

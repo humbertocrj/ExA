@@ -168,7 +168,7 @@ const ConveniosPage = () => {
                     </Col>
                     <Col md="auto">
 
-                        <label htmlFor="tipo">Tipo de projeto</label>
+                        <label htmlFor="tipo">Tipo de projeto*</label>
                         <select
                             name="tipo"
                             id="tipo"

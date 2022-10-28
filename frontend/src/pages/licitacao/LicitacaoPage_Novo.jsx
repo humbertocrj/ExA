@@ -29,18 +29,18 @@ import { stringToBoolean } from '../../utils/converToBool'
 const LicitacaoPage = () => {
   const [liberacao, setLiberacao] = useState("")
   const [movimentacao, setMovimentacao] = useState("")
-  const [processoExecucao, setProcessoExecucao] = useState("")
+  const [processoExecucao, setProcessoExecucao] = useState(false)
 
-  const [esclarecimento, setEsclarecimento] = useState("")
-  const [subConvenio, setSubConvenio] = useState("")
-  const [anexo, setAnexo] = useState("")
+  const [esclarecimento, setEsclarecimento] = useState(false)
+  const [subConvenio, setSubConvenio] = useState(false)
+  const [anexo, setAnexo] = useState(false)
   const [observacao, setObservacao] = useState("")
   const [convenio, setConvenio] = useState("")
   const [exibirFormulario, setExibirFormulario] = useState("")
-  const [prorrogacao, setProrrogacao] = useState("")
+  const [prorrogacao, setProrrogacao] = useState(false)
   const [dataOficioAnulacao, setDataOficioAnulacao] = useState("")
 
-  const statusOption = ['Selecione a situação', "Não iniciado", "Em andamento", "Suspenso", "Cancelado", "Concluído"]
+  const statusOption = ["Não iniciado", "Em andamento", "Suspenso", "Cancelado", "Concluído"]
   const [status, setStatus] = useState(statusOption[0])
 
 
@@ -95,14 +95,14 @@ const LicitacaoPage = () => {
       esclarecimento: esclarecimento,
       contratoSubConvenio: subConvenio,
       processoExecucao:processoExecucao,
-      prorrogacao: prorrogacao,
+      prorrogacao: stringToBoolean(prorrogacao),
       anexos: anexo,
       observacao: observacao,
       status: status,
       dataOficioAnulacao: dataOficioAnulacao,
       convenio: convenio._id
     }
-
+    console.log(licitacao)
 
     if (!id) {
       const res = await axios.post('http://localhost:9000/api/licitacao/novo', licitacao)

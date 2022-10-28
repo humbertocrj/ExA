@@ -5,8 +5,9 @@ import asyncHandler from 'express-async-handler'
 const convenioRouter = express.Router()
 
 let getConvenio = (req)=>{
+    
     return {
-        numeroCV:req.body.numeroCV,
+        numeroCV:req.body.numeroCV.trim(),
         numeroPrograma:req.body.numeroPrograma,
         numeroProposta:req.body.numeroProposta,
         numeroProcesso:req.body.numeroProcesso,
@@ -20,24 +21,28 @@ let getConvenio = (req)=>{
         recursoConcedente:req.body.recursoConcedente,
         contrapartida:req.body.contrapartida,
         responsavel:req.body.responsavel,
-        convenente:req.body.convenente
+        convenente:req.body.convenente,
+        ano:req.body.inicioVigencia.substring(0,4)
     }
 }
 
+ 
 convenioRouter.get('/', asyncHandler(async (req, res, next)=>{
     const convenios = await Convenio.find({})
+   
     res.json(convenios)
 }))
 
 convenioRouter.post('/novo', asyncHandler(async (req, res,next)=>{
-    
+   
     const convenio = new Convenio(getConvenio(req))
+ 
      await convenio.save()
     res.json(convenio)
 }))
 
 convenioRouter.get('/numero', asyncHandler(async (req, res)=>{
-
+ 
     const convenio = await Convenio.findOne({numeroCV:req.query.convenio})
     res.json(convenio)
 }))
@@ -64,4 +69,8 @@ convenioRouter.delete('/:id', asyncHandler(async(req,res,next)=>{
     res.json(doc)
 
 }))
+
+convenioRouter.get('/recursoPorAno', asyncHandler(asyncHandler))
+
+ 
 export default convenioRouter
