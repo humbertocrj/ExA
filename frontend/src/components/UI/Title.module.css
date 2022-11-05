@@ -1,12 +1,13 @@
 .title{
     position: relative;
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     text-transform: uppercase;
     font-weight: 600;
     
-    background-color: #77777711;
+    background-color: #dddcdc71;
     padding: 10px 15px;
-    color: #888;
+    color: #666;
     border-radius: 2px;
     margin-bottom: 10px;
+    
 }

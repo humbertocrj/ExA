@@ -1,5 +1,7 @@
 import express from 'express';
 import Convenio from '../models/convenioModel.js'
+import Pagamento from '../models/pagamentoModel.js'
+
 import asyncHandler from 'express-async-handler'
 
 const dashboardRouter = express.Router()
@@ -27,7 +29,7 @@ let getConvenio = (req) => {
 }
 
 const recursosPorAno = async () => {
-  
+
   let docs = await Convenio.aggregate([
     {
       $group: {
@@ -46,30 +48,54 @@ const recursosPorTipoProjeto = async () => {
 
   let docs = await Convenio.aggregate([
     {
-      $group:{
-        _id:{ano:'$ano', tipo:'$tipoDeProjeto'},
-        Total:{$sum:{$add:['$contrapartida', '$recursoConcedente']}}
+      $group: {
+        _id: { ano: '$ano', tipo: '$tipoDeProjeto' },
+        Total: { $sum: { $add: ['$contrapartida', '$recursoConcedente'] } }
+      }
     }
-  }
-    
+
   ]);
 
   docs.sort((a, b) => { return a._id.ano - b._id.ano })
   return docs
- 
+
 }
 
+const pagamentosPendentes = async () => {
+  let docs = await Pagamento.aggregate([
+    {
+      $match:{pago:false}
+    },{
+      $group:{
+        _id:{pago:'$pago'},
+        contagem:{$sum:1},
+        total:{$sum:'$valor'}
+      }
+    }
+  ])
+    return docs
+}
+
+const conveniosVigentes = async () => {
+  let docs = await Convenio.find({terminoVigencia:{$gt: new Date()}})
+  console.log(docs)
+   return docs
+}
 
 dashboardRouter.get('/', asyncHandler(async (req, res, next) => {
 
   const rpa = await recursosPorAno()
   const cptp = await recursosPorTipoProjeto()
-  console.log(cptp)
+  const pp = await pagamentosPendentes()
+  const cv = await conveniosVigentes()
 
-  res.json({ 
+  res.json({
     "recursoPorAno": rpa,
-    "recursoPorTipoProjeto":cptp
- })
+    "recursoPorTipoProjeto": cptp,
+    "pagamentosPendentes": pp,
+    conveniosVigentes: cv,
+  });
+  
 }))
 
 

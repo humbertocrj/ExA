@@ -28,7 +28,7 @@ const Sidebar = (props) => {
       </div>
 
       
-        <Link className={style["sidebar-item"]} to="dashboard">
+        <Link className={style["sidebar-item"]} to="/">
           <BarChartOutlinedIcon fontSize="large" />
           <span >Dashboard</span>
         </Link>

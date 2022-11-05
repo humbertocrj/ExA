@@ -43,13 +43,15 @@ function App() {
   return (
     <div className="app">
 
-      {!logged ? <Login autenticado={autenticado}/> :
+      {!logged ? <Login autenticado={autenticado} /> :
         <>
-          <Header logged={logged} logout={setLogged}/>
+          <Header logged={logged} logout={setLogged} />
           <div className="content">
             <Sidebar />
             <Main>
               <Routes>
+                <Route path="/" element={<Dashboard />} />
+
                 <Route path="/convenios" element={<ConvenioListar />} />
                 <Route path="/convenios/novo" element={<ConvenioNovo />} />
                 <Route
@@ -96,8 +98,9 @@ function App() {
                   path="/responsavel/relacionar/:id"
                   element={<ResponsavelConvenio />}
                 />
+                  #redirect any url that is different from all other
+                <Route path="*" element={<Dashboard />} />
 
-                <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
             </Main>
           </div>

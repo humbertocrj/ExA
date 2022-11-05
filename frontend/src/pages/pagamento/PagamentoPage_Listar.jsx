@@ -120,7 +120,7 @@ const PagamentoPage = () => {
               <td>{data.convenio.formaDeSelecao}</td>
               <td>{data.numeroParcela}</td>
               <td>{floatToCurrency(data.valor)}</td>
-              <td style={{ textAlign: 'center' }}>
+              <td style={{ textAlign: 'center', width:'15vw' }} >
                 <Button data-id={data._id} onClick={detalharPagamento} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
                 <Button data-id={data._id} className="mx-1" variant='outline-secondary' onClick={editarPagamento} size="sm"><EditIcon /></Button>
                 <Button id={data._id} onClick={deletarPagamento} variant='outline-secondary' size="sm">

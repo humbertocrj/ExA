@@ -25,7 +25,7 @@ export default function RecursoConvenioAno(props) {
           <YAxis type="number"    tick={{fontSize:10}} tickFormatter={(value) => floatToCurrency(value)}/>
           <Tooltip formatter={(value) => floatToCurrency(value)}/>
           <Legend />
-          <Line type="monotone"  dataKey="Total" strokeWidth={2} stroke="#8884d8" activeDot={{ r: 8 }}  />
+          <Line type="monotone"   dataKey="Total" strokeWidth={2} stroke={props.cor} activeDot={{ r: 8 }}  />
        
         </LineChart>
       </ResponsiveContainer>

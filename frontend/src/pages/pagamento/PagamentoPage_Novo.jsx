@@ -188,7 +188,7 @@ const PagamentoPage = () => {
               name="dataRealizada"
               onChange={(e) => setDataRealizada(e.target.value)}
               value={dataRealizada}
-              required
+              
             />
           </Col>
           <Col md={4}>

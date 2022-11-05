@@ -20,6 +20,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Button from 'react-bootstrap/Button';
 import { FaTrashAlt } from "react-icons/fa";
+import { flexbox } from '@mui/system';
 
 const ConveniosPage = () => {
 
@@ -106,7 +107,7 @@ const ConveniosPage = () => {
               <td>{data.numeroProposta}</td>
               <td>{data.numeroProcesso}</td>
               <td>{data.objeto}</td>
-              <td style={{ textAlign: 'center' }}>
+              <td style={{ textAlign: 'center', width:'15vw'}} className="">
                 <Button data-id={data._id} onClick={detalharConvenio} variant='outline-secondary' size="sm"><VisibilityIcon /></Button>
                 <Button data-id={data._id} className="mx-1" variant='outline-secondary' onClick={editarConvenio} size="sm"><EditIcon /></Button>
                 <Button id={data._id} onClick={deletarConvenio} variant='outline-secondary' size="sm">

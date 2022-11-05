@@ -47,17 +47,20 @@ const ConsultarConvenio = (props) => {
   }
 
   return <>
-    <Row>
+    <Row className="mt-2">
       <Col>
         <form className="d-flex" onSubmit={consultarConvenio}>
           <input
+          style={{'::placeholder':'red'}}
             type="text"
             id="numero"
             placeholder='Digite o número do convênio que deseja pesquisar'
             value={convenio}
             onChange={(e) => setConvenio(e.target.value)}
+            
           />
-          <button className="btn btn-primary">Consultar</button>
+        
+          <button className="ms-1 btn btn-primary">Consultar</button>
         </form>
       </Col>
     </Row>
@@ -69,7 +72,7 @@ const ConsultarConvenio = (props) => {
     </Row>
 
     {resultadoBusca && (
-      <div className="border rounded px-3"><Row>
+      <div className="border rounded px-3 mb-4"><Row>
         <Col>
           <label>Convênio</label>
           <p>{resultadoBusca.numeroCV}</p>
